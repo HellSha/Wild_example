@@ -14,12 +14,12 @@ const userLib = new Userlib($.hdb.getConnection({
                 case $.net.http.POST : {
                     $.response.contentType = "application/text";
                     var body='';
+                    var connection = $.hdb.getConnection();
                     var obj = JSON.parse($.request.body.asString());
                     var usid= getNextval("HiMTA::usid");
                     var name=obj.name;
                     function getTxtData()
                     {
-                        var connection = $.hdb.getConnection();
                         var statement = null;
                         var resultSet = null;
                         tx_data_query ='INSERT INTO "HiMTA::User" (usid,name) VALUES (' + usid + ',\'' + name + '\')';
