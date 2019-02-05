@@ -1,120 +1,62 @@
-var user = function (connection) {
+var user = function (conn) {
 
-    const USER_TABLE = "HiMTA::User";
-    /*
-            const USER = $.session.securityContext.userInfo.familyName ?
-                $.session.securityContext.userInfo.familyName + " " + $.session.securityContext.userInfo.givenName :
-                $.session.getUsername().toLocaleLowerCase(),
-    */
+	this.get = function () {
+		var query = 'SELECT * FROM "HiMTA::User"';
+		var rs = conn.executeQuery(query);
 
-    this.doGet = function () {
-    
-    const result = connection.executeQuery('SELECT * FROM "HiMTA::User"');
+		var body = "";
+		for (var item of rs) {
+			body += item.usid + ":" +
+				item.name + " ";
+		}
 
-            result.forEach(x => $.trace.error(JSON.stringify(x)));
+		$.response.setBody(JSON.stringify(body));
+		$.response.contentType = "application/json";
+		$.response.status = $.net.http.OK;
+	}
 
-            $.response.status = $.net.http.OK;
-            $.response.setBody(JSON.stringify(result));
-    }
+	this.post = function () {
+        var conn = $.hdb.getConnection();
+		var obj = JSON.parse($.request.body.asString());
+		var usid = getNextval("HiMTA::usid");
+		var name = obj.name;
+		conn.executeUpdate('INSERT INTO "HiMTA::User" VALUES (?,?)', usid, name);
 
-    this.doPost = function (oUser) {
-        //Get Next ID Number
-        oUser.usid = getNextval("HiMTA::usid");
+		conn.commit();
+		$.response.status = $.net.http.CREATED;
+		$.response.setBody("User " + obj.name + " created succefully.");
 
-        //generate query
-        const statement = createPreparedInsertStatement(USER_TABLE, oUser);
-        //execute update
-        connection.executeUpdate(statement.sql, statement.aValues);
+	};
 
-        connection.commit();
-        $.response.status = $.net.http.CREATED;
-        $.response.setBody(JSON.stringify(oUser));
-    };
+	this.put = function () {
+		var obj = JSON.parse($.request.body.asString());
+		var usid = obj.usid;
+		var name = obj.name;
+		conn.executeUpdate('UPDATE "HiMTA::User" SET "name"=? WHERE "usid"=?', name, usid);
 
+		conn.commit();
+		$.response.status = $.net.http.OK;
+		$.response.setBody("User " + obj.name + " updated succefully.");
+	};
 
-    this.doPut = function (obj) {
-        //TODO
-       
-    };
+	this.delete = function () {
+		var obj = JSON.parse($.request.body.asString());
+		var usid = obj.usid;
+		conn.executeUpdate('DELETE FROM "HiMTA::User" WHERE "usid"=?', usid);
 
+		conn.commit();
+		$.response.status = $.net.http.CREATED;
+		$.response.setBody("User " + obj.usid + " deleted succefully.");
+	};
 
-    this.doDelete = function (usid) {
-        const statement = createPreparedDeleteStatement(USER_TABLE, {usid: usid});
-        connection.executeUpdate(statement.sql, statement.aValues);
+	function getNextval(sSeqName) {
+		const statement = `select "${sSeqName}".NEXTVAL as "ID" from dummy`;
+		const result = connection.executeQuery(statement);
 
-        connection.commit();
-        $.response.status = $.net.http.OK;
-        $.response.setBody(JSON.stringify({}));
-    };
-
-    function getNextval(sSeqName) {
-        const statement = `select "${sSeqName}".NEXTVAL as "ID" from dummy`;
-        const result = connection.executeQuery(statement);
-
-        if (result.length > 0) {
-            return result[0].ID;
-        } else {
-            throw new Error('ID was not generated');
-        }
-    }
-    
-    function createPreparedGetStatement(sTableName){
-        
-    }
-
-    function createPreparedInsertStatement(sTableName, oValueObject) {
-        let oResult = {
-            aParams: [],
-            aValues: [],
-            sql: "",
-        };
-
-        let sColumnList = '', sValueList = '';
-
-        Object.keys(oValueObject).forEach((value, key) => {
-            sColumnList += "${key}";
-            sValueList += "?, ";
-
-            oResult.aValues.push(value);
-            oResult.aParams.push(key);
-        });
-        // Remove the last unnecessary comma and blank
-        sColumnList = sColumnList.slice(0, -2);
-        sValueList = sValueList.slice(0, -2);
-
-        oResult.sql = `insert into "${sTableName}" (${sColumnList}) values (${sValueList})`;
-
-        $.trace.error("sql to insert: " + oResult.sql);
-        return oResult;
-    };
-
-    function createPreparedDeleteStatement(sTableName, oConditionObject) {
-        let oResult = {
-            aParams: [],
-            aValues: [],
-            sql: "",
-        };
-
-        let sWhereClause = '';
-        var name, value, condIndex, condition;
-        
-        Object.keys(oConditionObject).forEach((value, key) => {
-            sColumnList += "${key}";
-            sValueList += "?, ";
-
-            oResult.aValues.push(value);
-            oResult.aParams.push(key);
-        });
-        
-        // Remove the last unnecessary AND
-        sWhereClause = sWhereClause.slice(0, -5);
-        if (sWhereClause.length > 0) {
-            sWhereClause = " where " + sWhereClause;
-        }
-
-        oResult.sql = `delete from "${sTableName}" ${sWhereClause}`;
-
-        $.trace.error("sql to delete: " + oResult.sql);
-        return oResult;
-    };
+		if (result.length > 0) {
+			return result[0].ID;
+		} else {
+			throw new Error('ID was not generated');
+		}
+	}
 };
