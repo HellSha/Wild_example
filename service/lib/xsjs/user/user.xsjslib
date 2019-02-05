@@ -16,7 +16,6 @@ var user = function (conn) {
 	}
 
 	this.post = function () {
-        var conn = $.hdb.getConnection();
 		var obj = JSON.parse($.request.body.asString());
 		var usid = getNextval("HiMTA::usid");
 		var name = obj.name;
@@ -51,7 +50,7 @@ var user = function (conn) {
 
 	function getNextval(sSeqName) {
 		const statement = `select "${sSeqName}".NEXTVAL as "ID" from dummy`;
-		const result = connection.executeQuery(statement);
+		const result = conn.executeQuery(statement);
 
 		if (result.length > 0) {
 			return result[0].ID;
