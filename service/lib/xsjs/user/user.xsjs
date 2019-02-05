@@ -1,74 +1,69 @@
 const Userlib = $.import('xsjs.user', 'user').user;
 const userLib = new Userlib($.hdb.getConnection({
-    treatDateAsUTC: true
+	treatDateAsUTC: true
+}));
+
+const UserInsert = $.import('xsjs.user', 'insert').insertUser;
+const userInsert = new UserInsert($.hdb.getConnection({
+	treatDateAsUTC: true
 }));
 
 (function () {
-    (function handleRequest() {
-        try {
-            switch ($.request.method) {
-                case $.net.http.PUT : {
-                    userLib.doPut(JSON.parse($.request.body.asString()));
-                    break;
-                }
-                case $.net.http.POST : {
-                    $.response.contentType = "application/text";
-                    var body='';
-                    var connection = $.hdb.getConnection();
-                    var obj = JSON.parse($.request.body.asString());
-                    var usid= getNextval("HiMTA::usid");
-                    var name=obj.name;
-                    function getTxtData()
-                    {
-                        var statement = null;
-                        var resultSet = null;
-                        tx_data_query ='INSERT INTO "HiMTA::User" (usid,name) VALUES (' + usid + ',\'' + name + '\')';
-                       try
-                        {
-                        
-                        statement = connection.prepareStatement(tx_data_query);
-                        resultSet= statement.executeQuery();
-                        connection.commit();
-                        } finally {
-                        statement.close();
-                        connection.close();
-                        }
-                        return resultSet;
-                    }
-                    function getNextval(sSeqName) {
-                            const statement = `select "${sSeqName}".NEXTVAL as "ID" from dummy`;
-                            const result = connection.executeQuery(statement);
+	(function handleRequest() {
+		try {
+			switch ($.request.method) {
+			case $.net.http.PUT:
+				{
+					var conn = $.hdb.getConnection();
+					var obj = JSON.parse($.request.body.asString());
+					var usid = obj.usid;
+					var name = obj.name;
+					conn.executeUpdate('UPDATE "HiMTA::User" SET "name"=? WHERE "usid"=?', name, usid);
 
-                            if (result.length > 0) {
-                                return result[0].ID;
-                            } else {
-                                throw new Error('ID was not generated');
-                            }
-                        }
-                    this.doGet = function ()
-                    {
-                              try
-                              {
-                              $.response.contentType = "application/json";  $.response.contentType = "text/plain";  $.response.setBody(getTxtData());
-                              }  catch(err) {
-                                 $.response.contentType = "text/plain";  $.response.setBody("Error while executing query: [" +err.message +"]");  $.response.returnCode = 200;
-                              }
-                    };
-                    doGet();
-                    break;
-                }
-                case $.net.http.DEL : {
-                    userLib.doDelete($.request.parameters.get("userid"));
-                    break;
-                }
-                default: {
-                    userLib.doGet();
-                    break;
-                }
-            }
-        } catch (e) {
-                $.response.status = $.net.http.BAD_REQUEST;
-                $.response.setBody(e.message);
-        }
-    }());
+					conn.commit();
+					$.response.status = $.net.http.OK;
+					$.response.setBody("User " + obj.name + " updated succefully.");
+					break;
+				}
+			case $.net.http.POST:
+				{
+					userInsert.post();    
+					break;
+				}
+			case $.net.http.DEL:
+				{                    
+                    var conn = $.hdb.getConnection();
+					var obj = JSON.parse($.request.body.asString());
+					var usid = obj.usid;
+					conn.executeUpdate('DELETE FROM "HiMTA::User" WHERE "usid"=?', usid);
+
+					conn.commit();
+					$.response.status = $.net.http.CREATED;
+					$.response.setBody("User " + obj.usid + " deleted succefully.");
+
+					break;
+				}
+			default:
+				{
+					var conn = $.hdb.getConnection();
+					var query = 'SELECT * FROM "HiMTA::User"';
+					var rs = conn.executeQuery(query);
+
+					var body = "";
+					for (var item of rs) {
+						body += item.usid + ":" +
+							item.name + " ";
+					}
+
+					$.response.setBody(JSON.stringify(body));
+					$.response.contentType = "application/json";
+					$.response.status = $.net.http.OK;
+					break;
+				}
+			}
+		} catch (e) {
+			$.response.status = $.net.http.BAD_REQUEST;
+			$.response.setBody(e.message);
+		}
+	}());
 }());

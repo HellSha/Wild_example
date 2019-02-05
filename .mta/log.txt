@@ -14,18 +14,18 @@
 [pool-1-thread-1] INFO com.sap.di.ext.mta.proc.ProcessingRun - Verifying MTA HiMTA: started symbol resource[pt_hdi]
 [pool-1-thread-2] INFO com.sap.di.ext.mta.proc.ProcessingRun - Verifying MTA HiMTA: started symbol resource[connectivity]
 [pool-1-thread-3] INFO com.sap.di.ext.mta.proc.ProcessingRun - Verifying MTA HiMTA: started symbol resource[destination]
-[pool-1-thread-2] INFO com.sap.di.ext.mta.proc.ProcessingRun - Verifying MTA HiMTA: finished symbol resource[connectivity]
-[pool-1-thread-3] INFO com.sap.di.ext.mta.proc.ProcessingRun - Verifying MTA HiMTA: finished symbol resource[destination]
 [pool-1-thread-1] INFO com.sap.di.ext.mta.proc.ProcessingRun - Verifying MTA HiMTA: finished symbol resource[pt_hdi]
-[pool-1-thread-3] INFO com.sap.di.ext.mta.proc.ProcessingRun - Verifying MTA HiMTA: started symbol module[db]
-[pool-1-thread-1] INFO com.sap.di.ext.mta.proc.ProcessingRun - Verifying MTA HiMTA: started symbol module[service]
-[pool-1-thread-1] DEBUG com.sap.di.ext.mta.cli.CommandHelper - Module 'service': command timeout is 300 seconds
-[pool-1-thread-3] DEBUG com.sap.di.ext.mta.cli.CommandHelper - Module 'db': command timeout is 300 seconds
-[pool-1-thread-3] DEBUG com.sap.di.ext.mta.cli.CommandHelper - Module 'db': command output file is D:\SAP\SAP Cloud Platform\Lection_Example\.mta\modulebuild2424180450600284680.txt
-[pool-1-thread-1] DEBUG com.sap.di.ext.mta.cli.CommandHelper - Module 'service': command output file is D:\SAP\SAP Cloud Platform\Lection_Example\.mta\modulebuild3689083469346199775.txt
-[pool-1-thread-3] DEBUG com.sap.di.ext.mta.cli.CommandHelper - Module 'db': invoking command [npm.cmd, install, --production]
-[pool-1-thread-1] DEBUG com.sap.di.ext.mta.cli.CommandHelper - Module 'service': invoking command [npm.cmd, install, --production]
-[pool-1-thread-3] INFO com.sap.di.ext.mta.proc.ProcessingRun - Verifying MTA HiMTA: finished symbol module[db]
-[pool-1-thread-1] INFO com.sap.di.ext.mta.proc.ProcessingRun - Verifying MTA HiMTA: finished symbol module[service]
+[pool-1-thread-3] INFO com.sap.di.ext.mta.proc.ProcessingRun - Verifying MTA HiMTA: finished symbol resource[destination]
+[pool-1-thread-2] INFO com.sap.di.ext.mta.proc.ProcessingRun - Verifying MTA HiMTA: finished symbol resource[connectivity]
+[pool-1-thread-1] INFO com.sap.di.ext.mta.proc.ProcessingRun - Verifying MTA HiMTA: started symbol module[db]
+[pool-1-thread-2] INFO com.sap.di.ext.mta.proc.ProcessingRun - Verifying MTA HiMTA: started symbol module[service]
+[pool-1-thread-2] DEBUG com.sap.di.ext.mta.cli.CommandHelper - Module 'service': command timeout is 300 seconds
+[pool-1-thread-1] DEBUG com.sap.di.ext.mta.cli.CommandHelper - Module 'db': command timeout is 300 seconds
+[pool-1-thread-1] DEBUG com.sap.di.ext.mta.cli.CommandHelper - Module 'db': command output file is D:\SAP\SAP Cloud Platform\Lection_Example\.mta\modulebuild6095916490158394434.txt
+[pool-1-thread-2] DEBUG com.sap.di.ext.mta.cli.CommandHelper - Module 'service': command output file is D:\SAP\SAP Cloud Platform\Lection_Example\.mta\modulebuild7751308051227062272.txt
+[pool-1-thread-2] DEBUG com.sap.di.ext.mta.cli.CommandHelper - Module 'service': invoking command [npm.cmd, install, --production]
+[pool-1-thread-1] DEBUG com.sap.di.ext.mta.cli.CommandHelper - Module 'db': invoking command [npm.cmd, install, --production]
+[pool-1-thread-1] INFO com.sap.di.ext.mta.proc.ProcessingRun - Verifying MTA HiMTA: finished symbol module[db]
+[pool-1-thread-2] INFO com.sap.di.ext.mta.proc.ProcessingRun - Verifying MTA HiMTA: finished symbol module[service]
 [main] INFO com.sap.di.beans.DynamicBeans - Created implementation class com.sap.di.ext.mta.dto.DeploymentDescriptor$$impl6 for bean interface com.sap.di.ext.mta.dto.DeploymentDescriptor
 [main] INFO com.sap.di.beans.DynamicBeans - Created implementation class com.sap.di.ext.mta.dto.DeploymentModule$$impl7 for bean interface com.sap.di.ext.mta.dto.DeploymentModule
