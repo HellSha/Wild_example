@@ -1,87 +1,138 @@
-var user = function (conn) {
-	var error = new userErrors();
+var statementConstructor = function () {
+    
+    this.createPreparedInsertStatement = function (sTableName, oValueObject) {
+        let oResult = {
+            aParams: [],
+            aValues: [],
+            sql: "",
+        };
+        let sColumnList = '', sValueList = '';
 
-	this.get = function () {
-		try {
-			var query = 'SELECT * FROM "HiMTA::User"';
-			var rs = conn.executeQuery(query);
+        Object.keys(oValueObject).forEach(value => {
+            sColumnList += `"${value}",`;
+            oResult.aParams.push(value);
+        });
 
-			var body = "";
-			for (var item of rs) {
-				body += item.usid + ":" +
-					item.name + " ";
-			}
+        Object.values(oValueObject).forEach(value => {
+            sValueList += "?, ";
+            oResult.aValues.push(value);
+        });
 
-			$.response.setBody(JSON.stringify(body));
-			$.response.contentType = "application/json";
-			$.response.status = $.net.http.OK;
-		} catch (ex) {
-			error.getErrors(ex);
-		}
-	}
+        // Remove the last unnecessary comma and blank
+        sColumnList = sColumnList.slice(0, -1);
+        sValueList = sValueList.slice(0, -2);
 
-	this.post = function () {
-		try {
-			var obj = JSON.parse($.request.body.asString());
-			var usid = getNextval("HiMTA::usid");
-			var name = obj.name;
-			conn.executeUpdate('INSERT INTO "HiMTA::User" VALUES (?,?)', usid, name);
+        oResult.sql = `insert into "${sTableName}" (${sColumnList}) values (${sValueList})`;
 
-			conn.commit();
-			$.response.status = $.net.http.CREATED;
-			$.response.setBody("User " + obj.name + " created succefully.");
-		} catch (ex) {
-			error.getErrors(ex);
-		}
+        $.trace.error("sql to insert: " + oResult.sql);
+        return oResult;
+    };
 
-	};
+    this.createPreparedUpdateStatement = function (sTableName, oValueObject) {
+        let oResult = {
+            aParams: [],
+            aValues: [],
+            sql: "",
+        };
+        let sColumnList = '', sValueList = '';
 
-	this.put = function () {
-		try {
-			var obj = JSON.parse($.request.body.asString());
-			var usid = obj.usid;
-			var name = obj.name;
-			conn.executeUpdate('UPDATE "HiMTA::User" SET "name"=? WHERE "usid"=?', name, usid);
+        Object.keys(oValueObject).forEach(value => {
+            sColumnList += `"${value}",`;
+            oResult.aParams.push(value);
+        });
 
-			conn.commit();
-			$.response.status = $.net.http.OK;
-			$.response.setBody("User " + obj.name + " updated succefully.");
-		} catch (ex) {
-			error.getErrors(ex);
-		}
+        Object.values(oValueObject).forEach(value => {
+            sValueList += "?, ";
+            oResult.aValues.push(value);
+        });
 
-	};
+        // Remove the last unnecessary comma and blank
+        sColumnList = sColumnList.slice(0, -1);
+        sValueList = sValueList.slice(0, -2);
 
-	this.delete = function () {
-		try {
-			var obj = JSON.parse($.request.body.asString());
-			var usid = obj.usid;
-			conn.executeUpdate('DELETE FROM "HiMTA::User" WHERE "usid"=?', usid);
+        oResult.sql = `UPDATE "${sTableName}" SET "name"='${oValueObject.name}' WHERE "usid"=${oValueObject.usid};`;
 
-			conn.commit();
-			$.response.status = $.net.http.CREATED;
-			$.response.setBody("User " + obj.usid + " deleted succefully.");
-		} catch (ex) {
-			error.getErrors(ex);
-		}
-	};
+        $.trace.error("sql to update: " + oResult.sql);        
+        return oResult;
+    };
 
-	function getNextval(sSeqName) {
-		const statement = `select "${sSeqName}".NEXTVAL as "ID" from dummy`;
-		const result = conn.executeQuery(statement);
-
-		if (result.length > 0) {
-			return result[0].ID;
-		} else {
-			throw new Error('ID was not generated');
-		}
-	}
 };
 
-var userErrors = function () {
-	this.getErrors = function (ex) {
-		$.response.status = $.net.http.BAD_REQUEST;
-		$.response.setBody(e.message);
-	}
 
+var user = function (connection) {
+
+    const statementConstructorLib = new statementConstructor();
+
+    const USER_TABLE = "HiMTA::User";
+   
+    /*
+            const USER = $.session.securityContext.userInfo.familyName ?
+                $.session.securityContext.userInfo.familyName + " " + $.session.securityContext.userInfo.givenName :
+                $.session.getUsername().toLocaleLowerCase(),
+    */
+
+    function getNextval(sSeqName) {
+
+        const statement = `select "${sSeqName}".NEXTVAL as "ID" from dummy`;
+        
+        const result = connection.executeQuery(statement);
+
+        if (result.length > 0) {
+            return result[0].ID;
+        } else {
+            throw new Error('ID was not generated');
+        }
+    }
+
+    this.doGet = function () { //this.doGet = function (obj) { 
+
+        const result = connection.executeQuery('SELECT * FROM "HiMTA::User"');
+
+        $.response.status = $.net.http.OK;
+        $.response.setBody(JSON.stringify(result));
+    };
+
+
+    this.doPost = function (oUser) {
+
+        //Get Next ID Number
+        oUser.usid = getNextval("HiMTA::usid");
+
+        //generate query
+        const statement = statementConstructorLib.createPreparedInsertStatement(USER_TABLE, oUser);
+        //execute update
+        connection.executeUpdate(statement.sql, statement.aValues);
+
+        connection.commit();
+        $.response.status = $.net.http.CREATED;
+        $.response.setBody(JSON.stringify(oUser));
+    };
+
+
+    this.doPut = function (oUser) {
+        //generate query
+        let sql="";
+
+        sql = `UPDATE "${USER_TABLE}" SET "name"='${oUser.name}' WHERE "usid"=${oUser.usid};`;
+        $.trace.error("sql to update: " + sql);
+
+        //execute update
+        connection.executeUpdate(sql);
+        connection.commit();
+
+        $.response.status = $.net.http.OK;
+        $.response.setBody('User updated');
+    };
+
+
+    this.doDelete = function (oUser) {
+
+        statement = `DELETE FROM "${USER_TABLE}" WHERE "usid"=${oUser.usid};`;
+        connection.executeUpdate(statement);
+
+        connection.commit();
+
+        $.response.status = $.net.http.OK;
+        $.response.setBody(JSON.stringify({}));
+    };
 };
