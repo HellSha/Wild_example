@@ -21,36 +21,49 @@ var user = function (conn) {
 	}
 
 	this.post = function () {
-		var obj = JSON.parse($.request.body.asString());
-		var usid = getNextval("HiMTA::usid");
-		var name = obj.name;
-		conn.executeUpdate('INSERT INTO "HiMTA::User" VALUES (?,?)', usid, name);
+		try {
+			var obj = JSON.parse($.request.body.asString());
+			var usid = getNextval("HiMTA::usid");
+			var name = obj.name;
+			conn.executeUpdate('INSERT INTO "HiMTA::User" VALUES (?,?)', usid, name);
 
-		conn.commit();
-		$.response.status = $.net.http.CREATED;
-		$.response.setBody("User " + obj.name + " created succefully.");
+			conn.commit();
+			$.response.status = $.net.http.CREATED;
+			$.response.setBody("User " + obj.name + " created succefully.");
+		} catch (ex) {
+			error.getErrors(ex);
+		}
 
 	};
 
 	this.put = function () {
-		var obj = JSON.parse($.request.body.asString());
-		var usid = obj.usid;
-		var name = obj.name;
-		conn.executeUpdate('UPDATE "HiMTA::User" SET "name"=? WHERE "usid"=?', name, usid);
+		try {
+			var obj = JSON.parse($.request.body.asString());
+			var usid = obj.usid;
+			var name = obj.name;
+			conn.executeUpdate('UPDATE "HiMTA::User" SET "name"=? WHERE "usid"=?', name, usid);
 
-		conn.commit();
-		$.response.status = $.net.http.OK;
-		$.response.setBody("User " + obj.name + " updated succefully.");
+			conn.commit();
+			$.response.status = $.net.http.OK;
+			$.response.setBody("User " + obj.name + " updated succefully.");
+		} catch (ex) {
+			error.getErrors(ex);
+		}
+
 	};
 
 	this.delete = function () {
-		var obj = JSON.parse($.request.body.asString());
-		var usid = obj.usid;
-		conn.executeUpdate('DELETE FROM "HiMTA::User" WHERE "usid"=?', usid);
+		try {
+			var obj = JSON.parse($.request.body.asString());
+			var usid = obj.usid;
+			conn.executeUpdate('DELETE FROM "HiMTA::User" WHERE "usid"=?', usid);
 
-		conn.commit();
-		$.response.status = $.net.http.CREATED;
-		$.response.setBody("User " + obj.usid + " deleted succefully.");
+			conn.commit();
+			$.response.status = $.net.http.CREATED;
+			$.response.setBody("User " + obj.usid + " deleted succefully.");
+		} catch (ex) {
+			error.getErrors(ex);
+		}
 	};
 
 	function getNextval(sSeqName) {
