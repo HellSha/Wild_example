@@ -1,18 +1,23 @@
 var user = function (conn) {
+	var error = new userErrors();
 
 	this.get = function () {
-		var query = 'SELECT * FROM "HiMTA::User"';
-		var rs = conn.executeQuery(query);
+		try {
+			var query = 'SELECT * FROM "HiMTA::User"';
+			var rs = conn.executeQuery(query);
 
-		var body = "";
-		for (var item of rs) {
-			body += item.usid + ":" +
-				item.name + " ";
+			var body = "";
+			for (var item of rs) {
+				body += item.usid + ":" +
+					item.name + " ";
+			}
+
+			$.response.setBody(JSON.stringify(body));
+			$.response.contentType = "application/json";
+			$.response.status = $.net.http.OK;
+		} catch (ex) {
+			error.getErrors(ex);
 		}
-
-		$.response.setBody(JSON.stringify(body));
-		$.response.contentType = "application/json";
-		$.response.status = $.net.http.OK;
 	}
 
 	this.post = function () {
@@ -58,4 +63,12 @@ var user = function (conn) {
 			throw new Error('ID was not generated');
 		}
 	}
+};
+
+var userErrors = function () {
+	this.getErrors = function (ex) {
+		$.response.status = $.net.http.BAD_REQUEST;
+		$.response.setBody(e.message);
+	}
+
 };
