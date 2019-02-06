@@ -55,6 +55,32 @@ var statementConstructor = function () {
         $.trace.error("sql to update: " + oResult.sql);        
         return oResult;
     };
+    
+    this.createPreparedDeleteStatement = function (sTableName, oConditionObject) 
+    {
+        let oResult = {
+            aParams: [],
+            aValues: [],
+            sql: "",
+        };
+
+        let sWhereClause = '';
+        for (let key in oConditionObject) {
+            sWhereClause += `"${key}"=? and `;
+            oResult.aValues.push(oConditionObject[key]);
+            oResult.aParams.push(key);
+        }
+        // Remove the last unnecessary AND
+        sWhereClause = sWhereClause.slice(0, -5);
+        if (sWhereClause.length > 0) {
+            sWhereClause = " where " + sWhereClause;
+        }
+
+        oResult.sql = `DELETE FROM "${sTableName}" ${sWhereClause}`;
+
+        $.trace.error("sql to delete: " + oResult.sql);
+        return oResult;
+    };
 
 };
 
@@ -84,7 +110,7 @@ var user = function (connection) {
         }
     }
 
-    this.doGet = function () { //this.doGet = function (obj) { 
+    this.doGet = function () { 
 
         const result = connection.executeQuery('SELECT * FROM "HiMTA::User"');
 
@@ -125,13 +151,20 @@ var user = function (connection) {
     };
 
 
-    this.doDelete = function (oUser) {
-
-        statement = `DELETE FROM "${USER_TABLE}" WHERE "usid"=${oUser.usid};`;
+    this.doDelete = function (usid) {
+/*
+        statement = `DELETE FROM "${USER_TABLE}" WHERE "usid"=${oUser.usid}`;
         connection.executeUpdate(statement);
 
         connection.commit();
 
+        $.response.status = $.net.http.OK;
+        $.response.setBody(JSON.stringify({}));
+*/
+        const statement = statementConstructorLib.createPreparedDeleteStatement(USER_TABLE, {usid: usid});
+        connection.executeUpdate(statement.sql, statement.aValues);
+
+        connection.commit();
         $.response.status = $.net.http.OK;
         $.response.setBody(JSON.stringify({}));
     };
