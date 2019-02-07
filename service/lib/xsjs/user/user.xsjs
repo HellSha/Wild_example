@@ -1,4 +1,4 @@
-const Userlib = $.import('xsjs.user', 'user').user;
+const Userlib = $.import('xsjs.user', 'userREST').user;
 const userLib = new Userlib($.hdb.getConnection({
     treatDateAsUTC: true
 }));
