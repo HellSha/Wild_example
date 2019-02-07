@@ -1,1 +1,4 @@
-Lection_Example.mtar
+.gitignore
+*.mtar
+.mta
+node_modules
