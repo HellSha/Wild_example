@@ -4,7 +4,7 @@ service namespace "HiMTA"{
                 navigates("Users_2_Address" as "toAddress", "Users_2_Cars" as "toCars")
             create using "xsjs.user:crudOData.xsjslib::usersCreate"
             update using "xsjs.user:crudOData.xsjslib::usersUpdate"
-            delete forbidden;
+            delete using "xsjs.user:crudOData.xsjslib::usersDelete";
 
     "HiMTA::ExtraInfo.Address" as "Address"
             create forbidden

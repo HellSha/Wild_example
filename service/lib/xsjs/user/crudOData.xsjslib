@@ -55,7 +55,6 @@ function usersUpdate(param) {
 }
 
 function usersDelete(param){
-//error - 403 - "Modification forbidden."
 
     var after = param.afterTableName;
 
