@@ -2,7 +2,7 @@ service namespace "HiMTA"{
 
     "HiMTA::User" as "Users"
                 navigates("Users_2_Address" as "toAddress", "Users_2_Cars" as "toCars")
-            create using "xsjs:user:createODataUser.xsjslib::usersCreate"
+            create using "xsjs.user:createODataUser.xsjslib::usersCreate"
             update forbidden
             delete forbidden;
 
