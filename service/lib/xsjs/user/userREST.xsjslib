@@ -2,11 +2,12 @@ var user = function (connection) {
 	const STATIC_CONN_LIB = new statementConstructor();
 	const USER_TABLE = "HiMTA::User";
 
-	/*
-	        const USER = $.session.securityContext.userInfo.familyName ?
-	            $.session.securityContext.userInfo.familyName + " " + $.session.securityContext.userInfo.givenName :
-	            $.session.getUsername().toLocaleLowerCase(),
-	*/
+	
+    const USER = $.session.securityContext.userInfo.familyName + " " + $.session.securityContext.userInfo.familyName + " " + $.session.securityContext.userInfo.givenName;
+    if(!USER){
+        $.session.getUsername().toLocaleLowerCase();
+    }
+	
 
 	function getNextval(sSeqName) {
 
@@ -30,15 +31,17 @@ var user = function (connection) {
 	};
 
 	this.doPost = function (oUser) {
-		oUser.usid = getNextval("HiMTA::usid");
+        if(!$.session.hasAppPrivilege("himta.create")){
+            oUser.usid = getNextval("HiMTA::usid");
 
-		const statement = STATIC_CONN_LIB.createPreparedInsertStatement(USER_TABLE, oUser);
-		connection.executeUpdate(statement.sql, statement.aValues);
+            const statement = STATIC_CONN_LIB.createPreparedInsertStatement(USER_TABLE, oUser);
+            connection.executeUpdate(statement.sql, statement.aValues);
 
-		connection.commit();
-		$.response.status = $.net.http.CREATED;
-		$.response.setBody(JSON.stringify(oUser));
-	};
+            connection.commit();
+            $.response.status = $.net.http.CREATED;
+            $.response.setBody(JSON.stringify(oUser));
+        }
+    };
 
 	this.doPut = function (oUser) {
 		let sql = "";

@@ -38,6 +38,12 @@
 	},
 
 	"sap.ui5": {
+        "rootView": {
+			"viewName": "user_create.view.App",
+			"type": "XML",
+			"async": true,
+			"id": "app"
+		},
 		"dependencies": {
 			"minUI5Version": "1.60.1",
 			"libs": {
@@ -60,6 +66,10 @@
 				"settings": {
 					"bundleName": "user_create.i18n.i18n"
 				}
+			},
+            "user": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": "https://p2001064106trial-trial-dev-service.cfapps.eu10.hana.ondemand.com/xsodata/himta.xsodata/Users"
 			}
 		},
 		"resources": {

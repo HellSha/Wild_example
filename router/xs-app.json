@@ -1,18 +1,31 @@
-{
- "welcomeFile": "/cp.portal",
- "authenticationMethod": "none",
- "routes": [
-  {
-   "source": "/api/(.*)",
-   "target": "$1",
-   "destination": "pt_service",
-   "authenticationType": "xsuaa"
-  },
-  {
-   "source": "^/(.*)$",
-   "target": "$1",
-   "service": "html5-apps-repo-rt",
-   "authenticationType": "xsuaa"
-  }
- ]
+{  
+   "welcomeFile": "/cp.portal",
+   "authenticationMethod":"route",
+   "routes":[
+    {
+      "source": "^/sapui5_resources/(.*)$",
+      "target": "$1",
+      "destination": "sapui5_provider",
+      "scope": "$XSAPPNAME.himta.view"
+    },
+    {
+      "source": "^/s4c/(.*)",
+      "target": "/$1",
+      "destination": "S4C"
+    },
+    {
+      "source": "/api/(.*)",
+      "target": "$1",
+      "destination": "pt_service",
+      "authenticationType": "xsuaa",
+      "scope":  "$XSAPPNAME.himta.create"
+    },
+    {
+      "source": "^/(.*)$",
+      "target": "$1",
+      "service": "html5-apps-repo-rt",
+      "authenticationType": "xsuaa",
+      "scope": "$XSAPPNAME.himta.view"
+    }
+    ]
 }

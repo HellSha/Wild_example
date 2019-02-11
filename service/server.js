@@ -10,6 +10,8 @@ var options = {
     redirectUrl : "/index.xsjs"
 };
 
+//options = xsjs.extend(options, xsenv.getServices({ uaa: {tag: "xsuaa"} }));
+
 // configure HANA
 try {
     options = Object.assign(options, xsenv.getServices({ hana: {tag: "hana"} }));

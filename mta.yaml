@@ -28,6 +28,20 @@ modules:
         parameters:
             memory: 512M
             disk-quota: 512M
+            
+#    -   
+#        name: flp
+#        type: com.sap.portal.site-content
+#        path: flp
+#        parameters:
+#           stack: cflinuxfs3
+#           memory: 128M
+#           buildpack: https://github.com/cloudfoundry/nodejs-buildpack/releases/download/v1.6.39/nodejs-buildpack-cflinuxfs3-v1.6.39.zip
+#        requires:
+#         - {name: pt_portal}
+#         - {name: pt_uaa}
+#         - {name: pt_deployer}
+#         - {name: deployer}
     -
         name: user_create
         type: html5
@@ -37,21 +51,35 @@ modules:
             disk-quota: 256M
         build-parameters:
             builder: grunt
+        requires:
+            - {name: pt_uaa}      
+    -
+        name: user_display
+        type: html5
+        path: web/user_display
+        parameters:
+            memory: 256M
+            disk-quota: 256M
+        build-parameters:
+            builder: grunt
+        requires:
+            - {name: pt_uaa} 
     -
         name: router
         type: nodejs
         path: router
-        requires:
-            - {name: destination}
-            - {name: connectivity}
-            - {name: pt_uaa}
-            - {name: pt_router}
-            - {name: pt_service, group: destinations, properties: {name: pt_service, url: '~{url}'}}
         parameters:
             memory: 128M
             disk-quota: 256M
         properties:
             XS_APP_LOG_LEVEL: debug
+        requires:
+            - {name: destination}
+            - {name: connectivity}
+            - {name: pt_uaa}
+            - {name: pt_router}
+ #           - {name: pt_portal}
+            - {name: pt_service, group: destinations, properties: {name: pt_service, url: '~{url}', forwardAuthToken: true}}
     -
         name: deployer
         type: com.sap.html5.application-content
@@ -66,6 +94,11 @@ modules:
         
            
 resources:
+#    -   name: pt_portal
+#        parameters:
+#           service-plan: standard
+#           service: portal
+#        type: org.cloudfoundry.managed-service
     -
         name: pt_hdi
         parameters:

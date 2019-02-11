@@ -1,0 +1,16 @@
+<mvc:View controllerName="user_create.controller.App" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc">
+    <App id="idAppControl">
+        <pages>
+            <Page title="{i18n>title}">
+                <content>
+                    <List id="peopleList" width="100%" items="{ path: 'users>/results', factory: '.productListFactory' }">
+                        <dependents>
+                            <ObjectListItem id="productExtended" title="UserID: {users>usid} {users>name}" type="Active" press=".onItemSelected">
+                            </ObjectListItem>
+                        </dependents>
+                    </List>
+                </content>
+            </Page>
+        </pages>
+    </App>
+</mvc:View>
