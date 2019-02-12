@@ -16,6 +16,29 @@ modules:
         parameters:
             memory: 256M
             disk-quota: 256M
+    - 
+        name: javarest
+        type: java
+        path: service/java
+        build-parameters:
+            builder: maven
+            maven-opts:
+              command: [ clean, install ]
+              defines:
+                skipTests: true
+            build-result: target/leverx-spring-demo-0.0.1-SNAPSHOT.jar
+        parameters:
+            memory: 1024M
+            disk-quota: 512M
+        provides:
+            - name: javarest
+              properties:
+                url: "${default-url}"
+        requires:
+            - name: pt_hdi
+            - name: destination
+            - name: pt_uaa
+            - name: connectivity
     -
         name: service
         type: nodejs
@@ -72,12 +95,16 @@ modules:
             memory: 128M
             disk-quota: 256M
         properties:
+            name: javarest
+            url: '~{url}'
+            forwardAuthToken: true
             XS_APP_LOG_LEVEL: debug
         requires:
             - {name: destination}
             - {name: connectivity}
             - {name: pt_uaa}
             - {name: pt_router}
+            - {name: javarest}
  #           - {name: pt_portal}
             - {name: pt_service, group: destinations, properties: {name: pt_service, url: '~{url}', forwardAuthToken: true}}
     -

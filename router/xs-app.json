@@ -16,9 +16,8 @@
     {
       "source": "/api/(.*)",
       "target": "$1",
-      "destination": "pt_service",
-      "authenticationType": "xsuaa",
-      "scope":  "$XSAPPNAME.himta.create"
+      "destination": "javarest",
+      "authenticationType": "xsuaa"
     },
     {
       "source": "^/(.*)$",
