@@ -6,8 +6,9 @@ var xsenv = require("@sap/xsenv");
 var port  = process.env.PORT || 3000;
 
 var options = {
-  	anonymous : true, // remove to authenticate calls
-    redirectUrl : "/index.xsjs"
+    //Only for the 3-4HW. For the 5-6HW to commit 10th string 
+  	anonymous : true, 
+    redirectUrl : "/node/index.xsjs"
 };
 
 //options = xsjs.extend(options, xsenv.getServices({ uaa: {tag: "xsuaa"} }));
@@ -19,12 +20,14 @@ try {
     console.log("[ERROR]", err.message);
 }
 
-// configure UAA.  Our uaa is pt_uaa
+// configure UAA.  Our uaa is pt_uaa. UNCOMMIT FOR TH E5-6 HW.
+/*
 try {
     options = Object.assign(options, xsenv.getServices({ uaa: "pt_uaa" }));
 } catch (err) {
     console.log("[ERROR]", err.message);
 }
+*/
 
 // start server
 xsjs(options).listen(port);

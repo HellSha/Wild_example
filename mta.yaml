@@ -31,9 +31,7 @@ modules:
             memory: 1024M
             disk-quota: 512M
         provides:
-            - name: javarest
-              properties:
-                url: "${default-url}"
+            - {name: javarest, properties: {url: '${default-url}'}}
         requires:
             - name: pt_hdi
             - name: destination
@@ -46,6 +44,7 @@ modules:
         requires:
             - {name: pt_db}
             - {name: pt_hdi}
+            - {name: pt_uaa}
         provides:
             - {name: pt_service, properties: {url: '${default-url}'}}
         parameters:
@@ -104,7 +103,7 @@ modules:
             - {name: connectivity}
             - {name: pt_uaa}
             - {name: pt_router}
-            - {name: javarest}
+            - {name: javarest, group: destinations, properties: {name: javarest, url: '~{url}', forwardAuthToken: true}}
  #           - {name: pt_portal}
             - {name: pt_service, group: destinations, properties: {name: pt_service, url: '~{url}', forwardAuthToken: true}}
     -

@@ -14,10 +14,16 @@
       "destination": "S4C"
     },
     {
-      "source": "/api/(.*)",
+      "source": "/java/(.*)",
       "target": "$1",
       "destination": "javarest",
       "authenticationType": "xsuaa"
+    },
+    {
+      "source": "/node/(.*)",
+      "target": "$1",
+      "destination": "pt_service",
+      "authenticationType": "xsuaa"    
     },
     {
       "source": "^/(.*)$",

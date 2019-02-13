@@ -8,6 +8,7 @@ const userLib = new Userlib($.hdb.getConnection({
         try {
             switch ($.request.method) {
                 case $.net.http.GET: {
+                
                     userLib.doGet();
                     break;
                 }

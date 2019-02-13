@@ -19,7 +19,7 @@ public class UserService {
 		return userDao.getAll();
 	}
 	
-	public User getUser(Long id) {
+	public User getUser(String id) {
 		Optional<User> UserOptional = this.userDao.getById(id);
 		User User = null;
 		if (UserOptional.isPresent()) {
@@ -36,7 +36,7 @@ public class UserService {
 		this.userDao.update(User);
 	}
 	
-	public void deleteUser(Long id) {
+	public void deleteUser(String id) {
 		this.userDao.delete(id);
 	}
 	

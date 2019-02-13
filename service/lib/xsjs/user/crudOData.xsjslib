@@ -21,7 +21,19 @@ function usersCreate(param) {
 	}
 	$.trace.error(JSON.stringify(oUser));
 	pStmt.close()
-
+    
+    var pStmt;
+    
+    pStmt = param.connection.prepareStatement(`INSERT INTO \"${USER_TABLE}\" VALUES(?,?)`);
+    addParametersToStatement(pStmt, oUser);
+    
+    pStmt = param.connection.prepareStatement("TRUNCATE TABLE \"" + after + "\"");
+    pStmt.executeUpdate();
+    pStmt.close();
+    pStmt = param.connection.prepareStatement("INSERT INTO \"" + after + "\" VALUES(?,?)");
+    addParametersToStatement(pStmt, oUser);
+    
+    /*
 	for (var i = 0; i < 2; i++) {
 		var pStmt;
 		if (i < 1) {
@@ -37,6 +49,14 @@ function usersCreate(param) {
 		pStmt.executeUpdate();
 		pStmt.close();
 	}
+    */
+}
+
+function addParametersToStatement(pStmt, oUser){
+    pStmt.setString(1, oUser.id.toString());
+    pStmt.setString(2, oUser.name.toString());
+    pStmt.executeUpdate();
+    pStmt.close();
 }
 
 function usersUpdate(param) {

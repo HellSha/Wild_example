@@ -27,12 +27,12 @@ public class UserDao implements IUserDao {
 	private DataSource dataSource;
 
 	@Override
-	public Optional<User> getById(Long id) {
+	public Optional<User> getById(String id) {
 		Optional<User> entity = null;
 		try (Connection conn = dataSource.getConnection();
 				PreparedStatement stmnt = conn.prepareStatement(
 						"SELECT TOP 1 \"usid\", \"name\" FROM \"HiMTA::User\" WHERE \"usid\" = ?")) {
-			stmnt.setLong(1, id);
+			stmnt.setString(1, id);
 			ResultSet result = stmnt.executeQuery();
 			if (result.next()) {
 				User User = new User();
@@ -53,12 +53,12 @@ public class UserDao implements IUserDao {
 		List<User> UserList = new ArrayList<User>();
 		try (Connection conn = dataSource.getConnection();
 				PreparedStatement stmnt = conn
-						.prepareStatement("SELECT \"usid\", \"name\" FROM \"HiMTA::User\"")) {
+						.prepareStatement("SELECT * FROM \"HiMTA::User\"")) {
 			ResultSet result = stmnt.executeQuery();
 			while (result.next()) {
 				User User = new User();
-				User.setId(result.getLong("ID"));
-				User.setName(result.getString("NAME"));
+				User.setId(result.getString("usid"));
+				User.setName(result.getString("name"));
 				UserList.add(User);
 			}
 		} catch (SQLException e) {
@@ -80,10 +80,10 @@ public class UserDao implements IUserDao {
 	}
 
 	@Override
-	public void delete(Long id) {
+	public void delete(String id) {
 		try (Connection conn = dataSource.getConnection();
 				PreparedStatement stmnt = conn.prepareStatement("DELETE FROM \"HiMTA::User\" WHERE \"usid\" = ?")) {
-			stmnt.setLong(1, id);
+			stmnt.setString(1, id);
 			stmnt.execute();
 		} catch (SQLException e) {
 			logger.error("Error while trying to delete entity: " + e.getMessage());
@@ -96,7 +96,7 @@ public class UserDao implements IUserDao {
 				PreparedStatement stmnt = conn.prepareStatement(
 						"UPDATE \"HiMTA::User\" SET \"name\" = ? WHERE \"usid\" = ?")) {
 			stmnt.setString(1, entity.getName());
-			stmnt.setLong(4, entity.getId());
+			stmnt.setString(4, entity.getId());
 			stmnt.executeUpdate();
 		} catch (SQLException e) {
 			logger.error("Error while trying to update entity: " + e.getMessage());
