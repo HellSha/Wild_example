@@ -1,6 +1,6 @@
 {  
    "welcomeFile": "/cp.portal",
-   "authenticationMethod":"route",
+   "authenticationMethod":"none",
    "routes":[
     {
       "source": "^/sapui5_resources/(.*)$",
@@ -27,8 +27,7 @@
       "source": "^/(.*)$",
       "target": "$1",
       "service": "html5-apps-repo-rt",
-      "authenticationType": "xsuaa",
-      "scope": "$XSAPPNAME.himta.view"
+      "authenticationType": "xsuaa"
     }
     ]
 }

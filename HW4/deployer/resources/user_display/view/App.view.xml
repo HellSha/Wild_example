@@ -3,17 +3,17 @@
 	<App>
 	<pages>
 	<Page>
-    <Panel id="PeopleDetailPanel" headerText="Details" class="sapUiResponsiveMargin" width="auto">
+    <Panel id="PeopleDetailPanel" headerText="List of Users:" class="sapUiResponsiveMargin" width="auto">
     <content>
       <Table id="details" items = "{
       path: 'users>/Users'
       }">
         <columns>
           <Column id="userIdColumn">
-            <Text text="{i18n>userIdText}" />
+            <Text text="{i18n>userID}" />
           </Column>
           <Column id="userNameColumn">
-            <Text text="{i18n>userNameText}" />
+            <Text text="{i18n>userName}" />
           </Column>        
         </columns>
         <items>
