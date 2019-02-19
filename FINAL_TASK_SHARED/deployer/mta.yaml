@@ -1,0 +1,37 @@
+﻿ID: HiMTA
+_schema-version: 2.1
+version: 0.0.1
+parameters:
+    deploy_mode: html5-repo
+
+modules:
+    -
+        name: musician_ui
+        type: html5
+        path: ../web/musician_ui
+        parameters:
+            memory: 256M
+            disk-quota: 256M
+        build-parameters:
+            builder: grunt
+        requires:
+            - {name: pt_uaa}
+    -
+        name: deployer
+        type: com.sap.html5.application-content
+        path: ./
+        requires:
+            - {name: pt_deployer}
+        parameters:
+            memory: 128M
+            disk-quota: 256M
+        build-parameters:
+            requires: [{name: musician_ui, artifacts: ['./*'], target-path: resources/musician_ui}]
+resources:
+    -
+        name: pt_uaa
+        type: org.cloudfoundry.existing-service
+    -
+        name: pt_deployer
+        type: org.cloudfoundry.existing-service
+   

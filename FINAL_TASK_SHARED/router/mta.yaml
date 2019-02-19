@@ -1,0 +1,46 @@
+﻿ID: HiMTA
+_schema-version: 2.1
+version: 0.0.1
+parameters:
+    deploy_mode: html5-repo
+
+modules:
+    -
+        name: router
+        type: nodejs
+        path: ./
+        parameters:
+            memory: 128M
+            disk-quota: 256M
+        properties:
+            XS_APP_LOG_LEVEL: debug
+        requires:
+            - {name: destination}
+            - {name: connectivity}
+            - {name: pt_uaa}
+            - {name: pt_router}
+            - {name: pt_service, group: destinations, properties: {name: pt_service, url: '~{url}'}}
+            
+resources:
+    -
+        name: pt_service
+        type: configuration
+        parameters:
+            provider-nid: mta
+            provider-id: 'HiMTA_service:pt_service'
+            version: '>=0.0.1'
+    -
+        name: destination
+        type: org.cloudfoundry.existing-service
+    -
+        name: pt_uaa
+        type: org.cloudfoundry.existing-service
+    -
+        name: pt_router
+        type: org.cloudfoundry.existing-service
+    -
+        name: connectivity
+        type: org.cloudfoundry.existing-service
+     
+   
+       

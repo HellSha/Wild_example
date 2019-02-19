@@ -1,0 +1,51 @@
+<mvc:View controllerName="musician_ui.controller.App" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc">
+    <Shell>
+        <App>
+            <pages>
+                <Page>
+                    <Panel id="MusicianDetailPanel" headerText="{i18n>headerPanel}" class="sapUiResponsiveMargin" width="auto">
+                        <content>
+                            <Table id="details" items="{path: 'musicians>/music'}">
+                                <headerToolbar>
+                                    <Toolbar>
+                                        <Button type="Accept"  text="Create Musician" press="openFirstDialog" />
+                                    </Toolbar>
+					           </headerToolbar>
+                                <columns>
+                                    <Column id="userNameColumn">
+                                        <Text text="{i18n>musName}" />
+                                    </Column>
+                                    <Column id="userAgeColumn">
+                                        <Text text="{i18n>musAge}" />
+                                    </Column>
+                                    <Column id="userDescrColumn">
+                                        <Text text="{i18n>musDescr}" />
+                                    </Column>
+                                    <Column id="userEditColumn">
+                                        <Text text="{i18n>title_edit}" />
+                                    </Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                            <Label text="{musicians>name}" />
+                                        </cells>
+                                        <cells>
+                                            <Label text="{musicians>age}" />
+                                        </cells>
+                                        <cells>
+                                            <Label text="{musicians>description}" />
+                                        </cells>
+                                        <cells>
+                                            <Button text="{i18n>button_edit}" type="Default"></Button>
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </content>
+                    </Panel>
+                </Page>
+            </pages>
+        </App>
+    </Shell>
+</mvc:View>

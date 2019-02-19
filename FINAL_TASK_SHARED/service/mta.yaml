@@ -1,0 +1,28 @@
+﻿ID: HiMTA_service
+_schema-version: 2.1
+version: 0.0.1
+
+modules:
+    -
+        name: service
+        type: nodejs
+        path: ./
+        requires:
+            - name: pt_db
+            - name: pt_hdi
+        provides:
+            - {name: pt_service,public: true, properties: {url: '${default-url}'}}
+        parameters:
+            memory: 512M
+            disk-quota: 512M
+   
+resources:
+    -   name: pt_db
+        type: configuration
+        parameters:
+            provider-nid: mta
+            provider-id: 'HiMTA_db:pt_db'
+            version: '>=0.0.1'
+    -
+        name: pt_hdi
+        type: org.cloudfoundry.existing-service
