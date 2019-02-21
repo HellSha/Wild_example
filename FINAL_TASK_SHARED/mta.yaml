@@ -16,7 +16,7 @@ resources:
         parameters:
             service-plan: hdi-shared
             service: hanatrial
-            config: {schema: UT}
+            config: {schema: AT}
             shared: true
         properties:
             hdi-container-name: '${service-name}'

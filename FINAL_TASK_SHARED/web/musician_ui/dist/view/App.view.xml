@@ -5,12 +5,12 @@
                 <Page>
                     <Panel id="MusicianDetailPanel" headerText="{i18n>headerPanel}" class="sapUiResponsiveMargin" width="auto">
                         <content>
-                            <Table id="details" items="{path: 'musicians>/music'}">
+                            <Table id="details" items="{path: 'musicians>/music'}" itemPress="onItemPress">
                                 <headerToolbar>
                                     <Toolbar>
-                                        <Button type="Accept"  text="Create Musician" press="openFirstDialog" />
+                                        <Button type="Accept" icon="sap-icon://write-new" text="Create Musician" press="openCreateDialog" />
                                     </Toolbar>
-					           </headerToolbar>
+                                </headerToolbar>
                                 <columns>
                                     <Column id="userNameColumn">
                                         <Text text="{i18n>musName}" />
@@ -18,11 +18,20 @@
                                     <Column id="userAgeColumn">
                                         <Text text="{i18n>musAge}" />
                                     </Column>
-                                    <Column id="userDescrColumn">
+                                    <Column id="userDescrColumn" width="30%">
                                         <Text text="{i18n>musDescr}" />
+                                    </Column>
+                                    <Column id="userCreateTColumn">
+                                        <Text text="{i18n>musCreaeteT}" />
+                                    </Column>
+                                    <Column id="userUpdateTColumn">
+                                        <Text text="{i18n>musUpdateT}" />
                                     </Column>
                                     <Column id="userEditColumn">
                                         <Text text="{i18n>title_edit}" />
+                                    </Column>
+                                    <Column id="userDeleteColumn">
+                                        <Text text="{i18n>title_delete}" />
                                     </Column>
                                 </columns>
                                 <items>
@@ -37,7 +46,16 @@
                                             <Label text="{musicians>description}" />
                                         </cells>
                                         <cells>
-                                            <Button text="{i18n>button_edit}" type="Default"></Button>
+                                            <Label text="{musicians>create_time}" />
+                                        </cells>
+                                        <cells>
+                                            <Label text="{musicians>update_time}" />
+                                        </cells>
+                                        <cells>
+                                            <Button icon="sap-icon://edit" text="{i18n>button_edit}" type="Default"></Button>
+                                        </cells>
+                                        <cells>
+                                            <Button icon="sap-icon://delete" text="{i18n>button_delete}" type="Reject"></Button>
                                         </cells>
                                     </ColumnListItem>
                                 </items>

@@ -6,6 +6,8 @@ context Info {
             name          : String(100) not null;
             age           : Integer     not null;
             description   : String(300);
+            update_time : UTCDateTime;
+            create_time : UTCDateTime;
             toSong : association[*] to Info.song on toSong.mid = mid;
     };
 

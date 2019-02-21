@@ -19,6 +19,13 @@
             "name": "controller\\App.controller.js"
         },
         {
+            "name": "controller\\CreateMusician-dbg.controller.js",
+            "isDebug": true
+        },
+        {
+            "name": "controller\\CreateMusician.controller.js"
+        },
+        {
             "name": "css\\style-dbg.css",
             "isDebug": true
         },
@@ -49,6 +56,9 @@
             "name": "tmp\\controller\\App.controller.js"
         },
         {
+            "name": "tmp\\controller\\CreateMusician.controller.js"
+        },
+        {
             "name": "tmp\\css\\style.css"
         },
         {
@@ -65,16 +75,25 @@
             "name": "tmp\\view\\App.view.xml"
         },
         {
+            "name": "tmp\\view\\CreateMusician.view.xml"
+        },
+        {
             "name": "tmp-dbg\\Component.js"
         },
         {
             "name": "tmp-dbg\\controller\\App.controller.js"
         },
         {
+            "name": "tmp-dbg\\controller\\CreateMusician.controller.js"
+        },
+        {
             "name": "tmp-dbg\\css\\style.css"
         },
         {
             "name": "view\\App.view.xml"
+        },
+        {
+            "name": "view\\CreateMusician.view.xml"
         },
         {
             "name": "xs-app.json"
