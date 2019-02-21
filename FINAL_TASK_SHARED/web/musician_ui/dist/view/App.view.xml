@@ -1,16 +1,28 @@
-<mvc:View controllerName="musician_ui.controller.App" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc">
+<mvc:View controllerName="musician_ui.controller.App" xmlns:f="sap.ui.layout.form" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc">
     <Shell>
         <App>
             <pages>
                 <Page>
-                    <Panel id="MusicianDetailPanel" headerText="{i18n>headerPanel}" class="sapUiResponsiveMargin" width="auto">
+        <customHeader>
+			<Bar>
+				<contentMiddle class="headerButtons">
+                    <Button id="create" type="Accept" icon="sap-icon://write-new" text="Create" press="handleCreatePress" />
+					<Button id="save" text="Save" icon="sap-icon://save" type="Emphasized" visible="true" press="handleSavePress" />
+					<Button id="cancel" type="Reject" text="Cancel" icon="sap-icon://decline" visible="true" press="handleCancelPress" />
+				</contentMiddle>
+			</Bar>
+		</customHeader>
+                    <Panel id="MusicianDetailPanel"  class="sapUiResponsiveMargin" width="auto">
                         <content>
+                            <VBox class="senterForm" editable="true">
+                                    <Label labelFor="name" text= "Musician's/Group's Name:" design = "Bold"/>
+                                    <Input  type = "Text" id="name" width = "40%"/>
+                                    <Label text = "Musician's/Group's Age:" design = "Bold"/>
+                                    <Input type = "Number" id="age" width = "40%"/>
+                                    <Label text = "Musician's/Group's About:" design = "Bold"/>
+                                    <Input type = "Text" id="descr" width = "40%"/>
+                            </VBox>
                             <Table id="details" items="{path: 'musicians>/music'}" itemPress="onItemPress">
-                                <headerToolbar>
-                                    <Toolbar>
-                                        <Button type="Accept" icon="sap-icon://write-new" text="Create Musician" press="openCreateDialog" />
-                                    </Toolbar>
-                                </headerToolbar>
                                 <columns>
                                     <Column id="userNameColumn">
                                         <Text text="{i18n>musName}" />
@@ -18,24 +30,21 @@
                                     <Column id="userAgeColumn">
                                         <Text text="{i18n>musAge}" />
                                     </Column>
-                                    <Column id="userDescrColumn" width="30%">
+                                    <Column id="userDescrColumn">
                                         <Text text="{i18n>musDescr}" />
                                     </Column>
-                                    <Column id="userCreateTColumn">
+                                    <Column id="userCreateTColumn" flexible="true" resizable="true">
                                         <Text text="{i18n>musCreaeteT}" />
                                     </Column>
                                     <Column id="userUpdateTColumn">
                                         <Text text="{i18n>musUpdateT}" />
                                     </Column>
-                                    <Column id="userEditColumn">
-                                        <Text text="{i18n>title_edit}" />
-                                    </Column>
                                     <Column id="userDeleteColumn">
                                         <Text text="{i18n>title_delete}" />
                                     </Column>
                                 </columns>
-                                <items>
-                                    <ColumnListItem>
+                                <items press="onSelectionChange">
+                                    <ColumnListItem press="onSelectionChange">
                                         <cells>
                                             <Label text="{musicians>name}" />
                                         </cells>
@@ -52,10 +61,7 @@
                                             <Label text="{musicians>update_time}" />
                                         </cells>
                                         <cells>
-                                            <Button icon="sap-icon://edit" text="{i18n>button_edit}" type="Default"></Button>
-                                        </cells>
-                                        <cells>
-                                            <Button icon="sap-icon://delete" text="{i18n>button_delete}" type="Reject"></Button>
+                                            <Button icon="sap-icon://delete" text="{i18n>button_delete}" type="Reject" press="handleDeletePress"></Button>
                                         </cells>
                                     </ColumnListItem>
                                 </items>
