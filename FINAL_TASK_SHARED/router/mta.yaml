@@ -19,7 +19,7 @@ modules:
             - {name: connectivity}
             - {name: pt_uaa}
             - {name: pt_router}
-            - {name: pt_service, group: destinations, properties: {name: pt_service, url: '~{url}'}}
+            - {name: pt_service, group: destinations, properties: {name: pt_service, url: '~{url}', forwardAuthToken: true}}
             
 resources:
     -

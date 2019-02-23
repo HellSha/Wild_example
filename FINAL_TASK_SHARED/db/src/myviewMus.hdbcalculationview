@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="HiMTA::myviewM" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="HOURLY" enforceSqlExecution="false">
-<descriptions defaultDescription="myviewM"/>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="HiMTA::myviewMus" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="HOURLY" enforceSqlExecution="false">
+<descriptions defaultDescription="myviewMus"/>
 <localVariables/>
 <variableMappings/>
 <dataSources>
@@ -11,6 +11,10 @@
 <calculationViews/>
 <logicalModel id="HiMTA::Info.musician">
   <attributes>
+    <attribute id="mid" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="mid"/>
+      <keyMapping columnObjectName="Info.musician" columnName="mid"/>
+    </attribute>
     <attribute id="name" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="name"/>
       <keyMapping columnObjectName="Info.musician" columnName="name"/>

@@ -1,3 +1,3 @@
 service {
-  "HiMTA::myviewM" as "music" keys generate local "id";
+  "HiMTA::myviewMus" as "music" keys generate local "id";
 }

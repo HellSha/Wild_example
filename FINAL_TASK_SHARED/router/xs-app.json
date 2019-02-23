@@ -15,7 +15,8 @@
     {
       "source": "/api/(.*)",
       "target": "$1",
-      "destination": "pt_service"  
+      "destination": "pt_service",
+    "authenticationType": "xsuaa"
     },
     {
       "source": "^/(.*)$",

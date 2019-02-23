@@ -18,6 +18,23 @@ sap.ui.define([
 		init: function () {
 			// call the base component's init function
 			UIComponent.prototype.init.apply(this, arguments);
+
+			$(function() {
+				$.ajax({
+				  type: "GET",
+				  url: "/",
+				  headers: {"X-Csrf-Token": "Fetch"},
+				  success: function(res, status, xhr) {
+					var sHeaderCsrfToken = "X-Csrf-Token";
+					var sCsrfToken = xhr.getResponseHeader(sHeaderCsrfToken);
+					$(document).ajaxSend(function(event, jqxhr, settings) {
+					  if (settings.type==="POST" || settings.type==="PUT" || settings.type==="DELETE") {
+						jqxhr.setRequestHeader(sHeaderCsrfToken, sCsrfToken);
+					  }
+					});
+				  }
+				});
+			  });
 		}
 	});
 });

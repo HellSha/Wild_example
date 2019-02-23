@@ -10,6 +10,7 @@ modules:
         requires:
             - name: pt_db
             - name: pt_hdi
+#            - name: pt_uaa
         provides:
             - {name: pt_service,public: true, properties: {url: '${default-url}'}}
         parameters:
@@ -25,4 +26,7 @@ resources:
             version: '>=0.0.1'
     -
         name: pt_hdi
+        type: org.cloudfoundry.existing-service
+    -   
+        name: pt_uaa
         type: org.cloudfoundry.existing-service

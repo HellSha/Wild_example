@@ -20,7 +20,7 @@ const musLib = new Muslib($.hdb.getConnection({
                     break;
                 }
                 case $.net.http.DEL : {
-                    musLib.doDelete($.request.parameters.get("id"));
+                    musLib.doDelete($.request.parameters.get("mid"));
                     break;
                 }
                 default: {

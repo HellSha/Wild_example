@@ -6,15 +6,18 @@
         <customHeader>
 			<Bar>
 				<contentMiddle class="headerButtons">
+                    <Button id="songs" type="Default" icon="sap-icon://write-new" text="Go to songs" press="" visible="false"/>
                     <Button id="create" type="Accept" icon="sap-icon://write-new" text="Create" press="handleCreatePress" />
 					<Button id="save" text="Save" icon="sap-icon://save" type="Emphasized" visible="true" press="handleSavePress" />
-					<Button id="cancel" type="Reject" text="Cancel" icon="sap-icon://decline" visible="true" press="handleCancelPress" />
+					<Button id="delete" type="Reject" text="Delete" icon="sap-icon://delete" visible="true" press="handleDeletePress" />
 				</contentMiddle>
 			</Bar>
 		</customHeader>
                     <Panel id="MusicianDetailPanel"  class="sapUiResponsiveMargin" width="auto">
                         <content>
                             <VBox class="senterForm" editable="true">
+                                    <Label labelFor="mid" text= "Musician's/Group's Id:" design = "Bold"/>
+                                    <Input  type = "Number" id="mid" width = "40%" enabled="false"/>
                                     <Label labelFor="name" text= "Musician's/Group's Name:" design = "Bold"/>
                                     <Input  type = "Text" id="name" width = "40%"/>
                                     <Label text = "Musician's/Group's Age:" design = "Bold"/>
@@ -22,7 +25,7 @@
                                     <Label text = "Musician's/Group's About:" design = "Bold"/>
                                     <Input type = "Text" id="descr" width = "40%"/>
                             </VBox>
-                            <Table id="details" items="{path: 'musicians>/music'}" itemPress="onItemPress">
+                            <Table id="details" mode="SingleSelectMaster" items="{path: 'musicians>/music'}" selectionChange=".onSelectionChange">
                                 <columns>
                                     <Column id="userNameColumn">
                                         <Text text="{i18n>musName}" />
@@ -39,30 +42,34 @@
                                     <Column id="userUpdateTColumn">
                                         <Text text="{i18n>musUpdateT}" />
                                     </Column>
+                                    <!-->
                                     <Column id="userDeleteColumn">
                                         <Text text="{i18n>title_delete}" />
                                     </Column>
+                                    -->
                                 </columns>
-                                <items press="onSelectionChange">
-                                    <ColumnListItem press="onSelectionChange">
+                                <items>
+                                    <ColumnListItem type="Active">
                                         <cells>
-                                            <Label text="{musicians>name}" />
+                                            <Text id="labelName" text="{musicians>name}" />
                                         </cells>
                                         <cells>
-                                            <Label text="{musicians>age}" />
+                                            <Text id="labelAge" text="{musicians>age}" />
                                         </cells>
                                         <cells>
-                                            <Label text="{musicians>description}" />
+                                            <Text id="labelDescr" text="{musicians>description}" />
                                         </cells>
                                         <cells>
-                                            <Label text="{musicians>create_time}" />
+                                            <Text text="{musicians>create_time}" />
                                         </cells>
                                         <cells>
-                                            <Label text="{musicians>update_time}" />
+                                            <Text text="{musicians>update_time}" />
                                         </cells>
+                                        <!-->
                                         <cells>
-                                            <Button icon="sap-icon://delete" text="{i18n>button_delete}" type="Reject" press="handleDeletePress"></Button>
+                                            <Button id="del" icon="sap-icon://delete" text="{i18n>button_delete}" enabled="false" type="Reject" press="handleDeletePress"></Button>
                                         </cells>
+                                        -->
                                     </ColumnListItem>
                                 </items>
                             </Table>
