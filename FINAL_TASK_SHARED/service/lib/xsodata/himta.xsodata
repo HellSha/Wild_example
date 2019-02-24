@@ -1,0 +1,26 @@
+service namespace "HiMTA"{
+
+    "HiMTA::Info.musician" as "Musicians"
+                navigates("Musician_2_Songs" as "toSongs")
+            create using "xsjs.musician:crudOData.xsjslib::musicianCreate"
+            update using "xsjs.musician:crudOData.xsjslib::musicianUpdate"
+            delete using "xsjs.musician:crudOData.xsjslib::musicianDelete";
+
+    "HiMTA::Info.song" as "Songs"
+		navigates("Song_2_Musician" as "toMusician")
+            create forbidden
+            update forbidden
+            delete forbidden;
+
+    association "Musician_2_Songs"
+    principal "Musicians"("mid")
+    multiplicity "1" 
+    dependent "Songs"("mid") 
+    multiplicity "*";
+
+    association "Song_2_Musician"
+    principal "Songs"("mid")
+    multiplicity "1"
+    dependent "Musicians"("mid")
+    multiplicity "1";
+}

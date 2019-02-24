@@ -15,7 +15,7 @@
         },
         "dataSources": {
             "mainService": {
-                "uri": "https://p2001064106trial-trial-dev-router.cfapps.eu10.hana.ondemand.com/api/musician.xsodata",
+                "uri": "https://p2001064106trial-trial-dev-service.cfapps.eu10.hana.ondemand.com/xsodata/himta.xsodata",
                 "type": "OData",
                 "settings": {
                     "odataVersion": "2.0"
@@ -79,6 +79,10 @@
                     "useBatch": false,
                     "disableHeadRequestForToken": true
                 }
+            },
+            "musician_config" : {
+                "type" : "sap.ui.model.json.JSONModel",
+                "uri" : "./model/musician_config.json"
             }
         }
     },
@@ -103,13 +107,13 @@
             "name": "home",
             "pattern": "",
             "target": ["home"]
-			}, {
-            "name": "create",
-            "pattern": "create/{invoicePath}",
+        }, {
+            "name": "song",
+            "pattern": "songs/{invoicePath}",
             "titleTarget": "",
             "greedy": false,
-            "target": ["CreateMusician"]
-			}],
+            "target": ["SongDetail"]
+        }],
         "targets": {
             "TargetApp": {
                 "viewType": "XML",
@@ -117,9 +121,9 @@
                 "clearControlAggregation": false,
                 "viewName": "App"
             },
-            "CreateMusician": {
+            "SongDetail": {
                 "viewType": "XML",
-                "viewName": "CreateMusician",
+                "viewName": "Songs",
                 "clearControlAggregation": true,
                 "transition": "show",
                 "viewLevel": 2

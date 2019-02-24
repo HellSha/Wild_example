@@ -1,0 +1,33 @@
+namespace HiMTA;
+
+context Info {
+    entity musician {
+			@Comment: 'Id of a Musician'
+			key mid : String(4);
+			@Comment: 'Name of a Musician'
+            name : String(100) not null;
+			@Comment: 'Age of a Musician'
+            age : Integer     not null;
+			@Comment: 'About a Musician'
+            description : String(300);
+			@Comment: 'Updated time of a Musician'
+            update_time : UTCDateTime;
+			@Comment: 'Created time of a Musician'
+            create_time : UTCDateTime;
+			
+            toSong : association[*] to Info.song on toSong.mid = mid;
+    };
+
+    entity song {
+			@Comment: 'Id of a Song'
+			key sid : String(4);
+			@Comment: 'Id of a Musician'
+            mid : Integer64   not null;
+			@Comment: 'Name of a Song'
+            name : String(100) not null;
+			@Comment: 'Album of a Song'
+            album : String(200) not null;
+			
+            toMusician : association[1] to Info.musician on toMusician.mid=mid;
+    };
+};

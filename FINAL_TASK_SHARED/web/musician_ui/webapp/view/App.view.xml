@@ -6,27 +6,28 @@
         <customHeader>
 			<Bar>
 				<contentMiddle class="headerButtons">
-                    <Button id="songs" type="Default" icon="sap-icon://write-new" text="Go to songs" press="" visible="false"/>
-                    <Button id="create" type="Accept" icon="sap-icon://write-new" text="Create" press="handleCreatePress" />
-					<Button id="save" text="Save" icon="sap-icon://save" type="Emphasized" visible="true" press="handleSavePress" />
-					<Button id="delete" type="Reject" text="Delete" icon="sap-icon://delete" visible="true" press="handleDeletePress" />
+                    <Button id="toSongs" class="muButtons" type="Default" icon="sap-icon://write-new" text="{i18n>songs_link}" press="handleToSongPress" visible="false"/>
+                    <Button id="create" class="muButtons" type="Default" icon="sap-icon://write-new" text="{i18n>button_create}" press="handleCreatePress" />
+					<Button id="save" class="muButtons" text="{i18n>button_save}" icon="sap-icon://save" type="Emphasized" visible="true" press="handleSavePress" />
+					<Button id="delete" class="muButtons" type="Reject" text="{i18n>button_delete}" icon="sap-icon://delete" visible="true" press="handleDeletePress" />
 				</contentMiddle>
 			</Bar>
 		</customHeader>
                     <Panel id="MusicianDetailPanel"  class="sapUiResponsiveMargin" width="auto">
                         <content>
-                            <VBox class="senterForm" editable="true">
-                                    <Label labelFor="mid" text= "Musician's/Group's Id:" design = "Bold"/>
-                                    <Input  type = "Number" id="mid" width = "40%" enabled="false"/>
-                                    <Label labelFor="name" text= "Musician's/Group's Name:" design = "Bold"/>
-                                    <Input  type = "Text" id="name" width = "40%"/>
-                                    <Label text = "Musician's/Group's Age:" design = "Bold"/>
-                                    <Input type = "Number" id="age" width = "40%"/>
-                                    <Label text = "Musician's/Group's About:" design = "Bold"/>
-                                    <Input type = "Text" id="descr" width = "40%"/>
+                            <VBox class="centerForm" editable="true">
+                                    <Label labelFor="mid" text= "{i18n>id_label}" design = "Bold"/>
+                                    <Input  type = "Number" id="mid" width = "40%" enabled="false"  value="{musician_config>/mid}"/>
+                                    <Label labelFor="name" text= "{i18n>name_label}" design = "Bold"/>
+                                    <Input  type = "Text" id="name" width = "40%" value="{musician_config>/name}"/>
+                                    <Label text = "{i18n>age_label}" design = "Bold"/>
+                                    <Input type = "Number" id="age" width = "40%" value="{musician_config>/age}"/>
+                                    <Label text = "{i18n>descr_label}" design = "Bold"/>
+                                    <Input type = "Text" id="descr" width = "40%" value="{musician_config>/description}"/>
+                                    <Button id="clear" type="Default" text="{i18n>clear_button}" press="onClearFormPress"/>
                             </VBox>
-                            <Table id="details" mode="SingleSelectMaster" items="{path: 'musicians>/music'}" selectionChange=".onSelectionChange">
-                                <columns>
+                            <Table id="details" mode="SingleSelectMaster" items="{path: 'musicians>/Musicians'}" selectionChange=".onSelectionChange">
+                                <columns class="tableColumns">
                                     <Column id="userNameColumn">
                                         <Text text="{i18n>musName}" />
                                     </Column>

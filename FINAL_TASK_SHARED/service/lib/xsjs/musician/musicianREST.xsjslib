@@ -1,12 +1,7 @@
 var user = function (connection) {
 	const STATIC_CONN_LIB = new statementConstructor();
 	const MUS_TABLE = "HiMTA::Info.musician";
-
-	/*
-	        const USER = $.session.securityContext.userInfo.familyName ?
-	            $.session.securityContext.userInfo.familyName + " " + $.session.securityContext.userInfo.givenName :
-	            $.session.getUsername().toLocaleLowerCase(),
-	*/
+	const MUS_ID = "HiMTA::Info.mid";
 
 	function getNextval(sSeqName) {
 
@@ -26,12 +21,12 @@ var user = function (connection) {
 
 		$.response.status = $.net.http.OK;
 		$.response.setBody(JSON.stringify(result));
-		
 	};
 
 	this.doPost = function (oMus) {
-		oMus.mid = getNextval("HiMTA::Info.mid");
-        	oMus.create_time = new Date().toISOString();
+		oMus.mid = getNextval(MUS_ID);
+        oMus.create_time = new Date().toISOString();
+		oMus.update_time = new Date().toISOString();
 
 		const statement = STATIC_CONN_LIB.createPreparedInsertStatement(MUS_TABLE, oMus);
 		connection.executeUpdate(statement.sql, statement.aValues);
@@ -43,9 +38,9 @@ var user = function (connection) {
 
 	this.doPut = function (oMus) {
 		let sql = "";
-        	oMus.update_time = new Date().toISOString();
+        oMus.update_time = new Date().toISOString();
 
-		sql = `UPDATE "${MUS_TABLE}" SET "description"='${oMus.descr}', "update_time"='${oMus.update_time}', "name"='${oMus.name}', "age"='${oMus.age}' WHERE "mid"=${oMus.mid};`;
+		sql = `UPDATE "${MUS_TABLE}" SET "description"='${oMus.description}', "update_time"='${oMus.update_time}', "name"='${oMus.name}', "age"='${oMus.age}' WHERE "mid"=${oMus.mid};`;
 		$.trace.error("sql to update: " + sql);
 
 		connection.executeUpdate(sql);
@@ -87,7 +82,7 @@ var statementConstructor = function () {
 			sValueList += "?, ";
 			oResult.aValues.push(value);
 		});
-
+		
 		sColumnList = sColumnList.slice(0, -1);
 		sValueList = sValueList.slice(0, -2);
 

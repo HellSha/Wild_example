@@ -19,6 +19,10 @@ sap.ui.define([
 			// call the base component's init function
 			UIComponent.prototype.init.apply(this, arguments);
 
+			// enable routing
+			this.getRouter().initialize();
+
+/*
 			$(function() {
 				$.ajax({
 				  type: "GET",
@@ -34,7 +38,8 @@ sap.ui.define([
 					});
 				  }
 				});
-			  });
+				});
+*/
 		}
 	});
 });

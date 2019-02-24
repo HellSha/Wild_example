@@ -1,4 +1,4 @@
-<mvc:View controllerName="musician_ui.controller.CreateMusician" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc">
+<mvc:View controllerName="musician_ui.controller.Songs" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc">
     <Shell>
         <App>
             <pages>
