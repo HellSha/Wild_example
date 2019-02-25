@@ -28,6 +28,8 @@ sap.ui.define([
         getViewModel().getModel("musicians").refresh(true);
     };
     this.createMusician = function (oMusician) {
+        delete oMusician.update_time;
+        delete oMusician.create_time;
         getViewModel().getModel("musicians").create("/Musicians", oMusician, {
             merge: false,
             success: function () {
@@ -41,6 +43,9 @@ sap.ui.define([
         });
     };
     this.updateMusician = function (oMusician) {
+        oMusician.update_time = null;
+        oMusician.create_time = null;
+        console.log(oMusician)
         getViewModel().getModel("musicians").update("/Musicians('" + oMusician.mid + "')", oMusician, {
             merge: false,
             success: function () {
@@ -56,7 +61,7 @@ sap.ui.define([
     return Controller.extend("musician_ui.controller.App", {
         onInit: function () {
             setViewModel(this.getView());
-                                                                        /*.getProperty("name_property").getData()*/
+            /*.getProperty("name_property").getData()*/
             this.musician_config = this.getView().getModel("musician_config");
         },
         handleCreatePress: function () {
@@ -69,26 +74,6 @@ sap.ui.define([
             var oMusician = this.musician_config.getData();
             if (validateMusician(oMusician)) {
                 updateMusician(oMusician);
-                /*
-                var oMusicianUpd = JSON.stringify(oMusician);
-                //SEND THE REQUEST    
-                $.ajax({
-                    type: "PUT",
-                    url: "https://p2001064106trial-trial-dev-router.cfapps.eu10.hana.ondemand.com/api/xsjs/musician/musician.xsjs",
-                    contentType: "application/json",
-                    data: oMusicianUpd,
-                    dataType: "json",
-                    crossDomain: true,
-                    success: function (data) {
-                        MessageToast.show(getProperty("update_success_info"));
-                        updateTableView();
-                    },
-                    error: function (data) {
-                        var message = JSON.stringify(data);
-                        alert(message);
-                    }
-                });
-                */
             }
         },
         handleDeletePress: function () {
@@ -112,13 +97,13 @@ sap.ui.define([
                 });
             }
         },
-        handleToSongPress: function(evt) {
+        handleToSongPress: function (evt) {
             var oItem = evt.getSource();
-			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 
-			oRouter.navTo("create", {
-				invoicePath: encodeURIComponent(oItem.getBindingContext("musicians").getPath().substr(1))
-			});
+            oRouter.navTo("create", {
+                invoicePath: encodeURIComponent(oItem.getBindingContext("musicians").getPath().substr(1))
+            });
         },
         onSelectionChange: function () {
             var oTable = this.getView().byId("details");

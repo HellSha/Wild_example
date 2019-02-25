@@ -40,9 +40,9 @@
             "phone": true
         },
         "supportedThemes": [
-			"sap_hcb",
-			"sap_belize"
-		]
+            "sap_hcb",
+            "sap_belize"
+        ]
     },
 
     "sap.ui5": {
@@ -80,18 +80,16 @@
                     "disableHeadRequestForToken": true
                 }
             },
-            "musician_config" : {
-                "type" : "sap.ui.model.json.JSONModel",
-                "uri" : "./model/musician_config.json"
+            "musician_config": {
+                "type": "sap.ui.model.json.JSONModel",
+                "uri": "./model/musician_config.json"
             }
         }
     },
     "resources": {
-        "css" : [
-            {
-                "uri" : "css/style.css"
-            }
-        ]
+        "css": [{
+            "uri": "css/style.css"
+        }]
     },
     "routing": {
         "config": {
@@ -100,7 +98,7 @@
             "async": true,
             "viewPath": "musician_ui.view",
             "controlAggregation": "pages",
-            "controlId": "idAppControl",
+            "controlId": "app",
             "clearControlAggregation": false
         },
         "routes": [{

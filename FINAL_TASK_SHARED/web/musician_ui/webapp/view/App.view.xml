@@ -1,12 +1,12 @@
 <mvc:View controllerName="musician_ui.controller.App" xmlns:f="sap.ui.layout.form" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc">
     <Shell>
-        <App>
+        <App id="app">
             <pages>
                 <Page>
         <customHeader>
 			<Bar>
 				<contentMiddle class="headerButtons">
-                    <Button id="toSongs" class="muButtons" type="Default" icon="sap-icon://write-new" text="{i18n>songs_link}" press="handleToSongPress" visible="false"/>
+                    <Button id="toSongs" class="muButtons" type="Default" text="{i18n>songs_link}" press="handleToSongPress" visible="false"/>
                     <Button id="create" class="muButtons" type="Default" icon="sap-icon://write-new" text="{i18n>button_create}" press="handleCreatePress" />
 					<Button id="save" class="muButtons" text="{i18n>button_save}" icon="sap-icon://save" type="Emphasized" visible="true" press="handleSavePress" />
 					<Button id="delete" class="muButtons" type="Reject" text="{i18n>button_delete}" icon="sap-icon://delete" visible="true" press="handleDeletePress" />

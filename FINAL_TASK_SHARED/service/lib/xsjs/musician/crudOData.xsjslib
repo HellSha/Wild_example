@@ -53,11 +53,9 @@ function musicianUpdate(param) {
 
 	var oMusItems = recordSetToJSON(oResult, "items");
 	var oMusician = oMusItems.items[0];
-	oMusician.update_time = new Date().toISOString();
 
 	var uStmt;
-	uStmt = param.connection.prepareStatement(`UPDATE \"${MUSICIAN_TABLE}\" SET \"name\" = '?', \"age\" = '?', \"description\" = '?', \"update_time\" = '?'  WHERE \"mid\" = ${oMusician.mid};`);
-	addParametersToUpdateStatement(uStmt, oMusician);
+	uStmt = param.connection.prepareStatement(`UPDATE \"${MUSICIAN_TABLE}\" SET \"name\" = '${oMusician.name}', \"age\" = '${oMusician.age}', \"description\" = '${oMusician.description}', \"update_time\" = current_timestamp  WHERE \"mid\" = ${oMusician.mid};`);
 	uStmt.executeUpdate();
     uStmt.close();
 }
@@ -66,7 +64,7 @@ function addParametersToUpdateStatement(pStmt, oMusician){
     pStmt.setString(1, oMusician.name.toString());
 	pStmt.setString(2, oMusician.age.toString());
 	pStmt.setString(3, oMusician.description.toString());
-	pStmt.setTimestamp(4, oMusician.update_time);
+	pStmt.setTimestamp(4, (new Date()).toISOString());
     pStmt.executeUpdate();
     pStmt.close();
 }
