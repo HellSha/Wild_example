@@ -18,7 +18,7 @@ modules:
             memory: 1024M
             disk-quota: 512M
         provides:
-            - {name: javarest, properties: {url: '${default-url}'}}
+            - {name: javarest, public: true, properties: {url: '${default-url}'}}
         requires:
             - name: pt_uaa
             - name: pt_hdi

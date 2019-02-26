@@ -29,8 +29,10 @@ public class HomeController {
 	private static final String SPACE_NAME = "space_name";
 	
 	
-	@Autowired  private CloudService cloudService;  
-	@Autowired  private SecurityService securityService; 
+	@Autowired  
+	private CloudService cloudService;  
+	@Autowired  
+	private SecurityService securityService; 
 	@RequestMapping(value="/", method=RequestMethod.GET)  
 	public String getHome(Model model) {   
 		Map<String, JsonElement> vcap = cloudService.getSpaceName();

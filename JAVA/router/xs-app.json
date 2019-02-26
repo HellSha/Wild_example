@@ -1,6 +1,6 @@
 {  
    "welcomeFile": "/cp.portal",
-   "authenticationMethod":"none",
+   "authenticationMethod":"route",
    "routes":[
     {
       "source": "^/sapui5_resources/(.*)$",
@@ -17,12 +17,6 @@
       "target": "$1",
       "destination": "javarest",
       "authenticationType": "xsuaa"
-    },	
-    {
-      "source": "/api/(.*)",
-      "target": "$1",
-      "destination": "pt_service",
-    "authenticationType": "xsuaa"
     },
     {
       "source": "^/(.*)$",

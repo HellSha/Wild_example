@@ -19,15 +19,15 @@ modules:
             - {name: connectivity}
             - {name: pt_uaa}
             - {name: pt_router}
-            - {name: pt_service, group: destinations, properties: {name: pt_service, url: '~{url}', forwardAuthToken: true}}
+            - {name: javarest, group: destinations, properties: {name: javarest, url: '~{url}', forwardAuthToken: true}}
             
 resources:
     -
-        name: pt_service
+        name: javarest
         type: configuration
         parameters:
             provider-nid: mta
-            provider-id: 'HiMTA_service:pt_service'
+            provider-id: 'HiMTA_service_java:javarest'
             version: '>=0.0.1'
     -
         name: destination
@@ -40,6 +40,9 @@ resources:
         type: org.cloudfoundry.existing-service
     -
         name: connectivity
+        type: org.cloudfoundry.existing-service
+    -
+        name: pt_hdi
         type: org.cloudfoundry.existing-service
      
    

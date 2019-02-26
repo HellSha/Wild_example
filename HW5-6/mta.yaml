@@ -90,7 +90,7 @@ modules:
               command: [ clean, install ]
               defines:
                 skipTests: true
-            build-result: target/leverx-spring-demo-0.0.1-SNAPSHOT.jar
+            build-result: target/shaadt-demo-0.0.1-SNAPSHOT.jar
         parameters:
             memory: 1024M
             disk-quota: 512M
