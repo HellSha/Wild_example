@@ -1,21 +1,23 @@
 package com.leverx.shaadtdemo.domain;
 
-public class OData {
-
-	private int id;
+public class Property {
 	private String name;
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+	
+	private String value;
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
 }

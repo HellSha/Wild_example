@@ -2,7 +2,7 @@
     <Shell>
         <App>
             <pages>
-                <Page title="{i18n>DetailTitle}" showNavButton="true" navButtonPress="handleNavButtonPress">
+                <Page title="{i18n>songTitle}" showNavButton="true" navButtonPress="handleNavButtonPress">
                     <Table id="details" mode="SingleSelectMaster" items="{path: 'songs>/song'}" selectionChange=".onSelectionChange">
                                 <columns class="tableColumns">
                                     <Column id="songIdColumn">
@@ -17,21 +17,20 @@
                                     <Column id="userEditColumn">
                                         <Text text="{i18n>title_edit}" />
                                     </Column>
-                                
                                 </columns>
                                 <items>
                                     <ColumnListItem type="Active">
                                         <cells>
-                                            <Input id="labelName" text="{path: 'songs>sid', formatter: '.statusEdit'}"/>
+                                            <Input id="labelName" value="{songs>sid}" editable="false"/>
                                         </cells>
                                         <cells>
-                                            <Input id="labelAge" value="{songs>name}" />
+                                            <Input id="labelAge" value="{songs>name}" editable="false"/>
                                         </cells>
                                         <cells>
-                                            <Input id="labelDescr" value="{songs>album}" />
+                                            <Input id="labelDescr" value="{songs>album}" editable="false"/>
                                         </cells>
                                         <cells>
-                                            <Button id="del" icon="sap-icon://edit" text="{i18n>button_edit}" enabled="{path: '/',formatter: '.statusEdit'}" type="" press="handleDeletePress"></Button>
+                                            <Button id="editButton" icon="sap-icon://edit" text="{i18n>button_edit}" enabled="{song_config>enabled}" type="Default" press="handleEditPress"></Button>
                                         </cells>
                                     </ColumnListItem>
                                 </items>

@@ -1,7 +1,7 @@
 sap.ui.define([], function () {
 	"use strict";
 	return {
-		statusText: function (status) {
+		statusText: function () {
             switch(status){
                 case "enabled" :
                      return enableButtonStatus.enabled = "enabled";

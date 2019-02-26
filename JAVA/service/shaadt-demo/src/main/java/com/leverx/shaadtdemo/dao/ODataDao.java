@@ -18,13 +18,14 @@ import com.sap.cloud.sdk.odatav2.connectivity.ODataQueryResult;
 public class ODataDao {
 	private static final Logger logger = LoggerFactory.getLogger(ODataDao.class);
 	private final String SERVICE_PATH = "/V2/OData/OData.svc/";
-	private final String SERVICE_ENTITY = "Suppliers";
+	private final String SERVICE_ENTITY = "Products";
 	
 	public List<OData> getAll(String destinationName) {
 		List<OData> UserList = new ArrayList<OData>();
 		try {
-			ODataQueryResult result = ODataQueryBuilder.withEntity(SERVICE_PATH, SERVICE_ENTITY).select("ID", "Name").build().execute(destinationName);
+			ODataQueryResult result = ODataQueryBuilder.withEntity(SERVICE_PATH , SERVICE_ENTITY).select("ID", "Name").build().execute(destinationName);
 			List<Map<String, Object>> listMap = result.asListOfMaps();
+			logger.error("ODATA: " + getODataList(listMap));
 			return  getODataList(listMap);
 		} catch (ODataException e) {
 			logger.error("Error while trying to get list of entities: " + e.getMessage());
@@ -36,7 +37,7 @@ public class ODataDao {
 		List<OData> suppliersList = new ArrayList<>();
 		listMap.forEach(item -> {
 			OData supplier = new OData();
-			supplier.setId(item.get("ID").toString());
+			supplier.setId(Integer.parseInt(item.get("ID").toString()));
 			supplier.setName(item.get("Name").toString());
 			suppliersList.add(supplier);
 		});

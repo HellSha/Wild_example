@@ -13,6 +13,7 @@ public class ODataService {
 	
 	@Autowired
 	private ODataDao odataDao;
+
 	
 	public List<OData> getAllSuppliers(String destinationName){
 		return odataDao.getAll(destinationName);

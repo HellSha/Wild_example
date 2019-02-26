@@ -17,8 +17,8 @@ public class ODataController {
 	@Autowired
 	private ODataService  oDataService;
 	
-	@GetMapping(value="/odata/{desinationName}")
-	public List<OData> getAllSuppliers(@PathVariable String desinationName) {
-	  return 	oDataService.getAllSuppliers(desinationName);
+	@GetMapping(value="/odata/{destinationName}")
+	public List<OData> getAllSuppliers(@PathVariable String destinationName) {
+	  return 	oDataService.getAllSuppliers(destinationName);
 	}
 }

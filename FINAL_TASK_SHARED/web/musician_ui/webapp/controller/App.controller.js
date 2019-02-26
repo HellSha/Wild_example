@@ -12,7 +12,6 @@ sap.ui.define([
     this.setViewModel = function (value) {
         oViewModel = value;
     };
-
     this.getProperty = function (property) {
         return getViewModel().getModel("i18n").getResourceBundle().getText(property);
     };
@@ -61,23 +60,21 @@ sap.ui.define([
     return Controller.extend("musician_ui.controller.App", {
         onInit: function () {
             setViewModel(this.getView());
-                                                /*.getProperty("name_property").getData()*/
-            this.musician_config = this.getView().getModel("musician_config");
         },
         handleCreatePress: function () {
-            var oMusician = this.musician_config.getData();
+            var oMusician = this.getView().getModel("musician_config").getData();
             if (validateMusician(oMusician)) {
                 createMusician(oMusician);
             }
         },
         handleSavePress: function () {
-            var oMusician = this.musician_config.getData();
+            var oMusician = this.getView().getModel("musician_config").getData();
             if (validateMusician(oMusician)) {
                 updateMusician(oMusician);
             }
         },
         handleDeletePress: function () {
-            var oMusician = this.musician_config.getData();
+            var oMusician = this.getView().getModel("musician_config").getData();
             if (validateMusician(oMusician)) {
                 var mid = oMusician.mid;
                 $.ajax({
@@ -100,7 +97,6 @@ sap.ui.define([
         handleToSongPress: function () {
             var oTable = this.getView().byId("details");
             var selItem = oTable.getSelectedItem();
-            selItem.getBindingContext("musicians").getModel().refresh(true);
 
             var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 
@@ -110,18 +106,13 @@ sap.ui.define([
         },
         onSelectionChange: function () {
             var oTable = this.getView().byId("details");
-/*            
-            var selItem = oTable.getSelectedItem();
-            var index = oTable.indexOfItem(selItem);
-            selItem.getBindingContext("musicians").getModel().refresh(true);
-*/
             var obj = oTable.getSelectedItem().getBindingContext("musicians").getObject();
 
             this.byId("mid").setValue(obj.mid);
             this.byId("name").setValue(obj.name);
             this.byId("age").setValue(obj.age);
             this.byId("descr").setValue(obj.description);
-            
+
         },
         onClearFormPress: function () {
             this.byId("mid").setValue("");
