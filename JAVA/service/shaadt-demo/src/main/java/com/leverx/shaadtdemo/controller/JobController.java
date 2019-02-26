@@ -20,6 +20,7 @@ public class JobController {
 	@Autowired
 	private JobService jobService;
 
+
 	@GetMapping(value = "/job")
 	public List<Job> getAllJobs() {
 		return jobService.getJobAll();
@@ -44,5 +45,6 @@ public class JobController {
 	public void updateJob(@RequestBody Job job) {
 		jobService.updateJob(job);
 	}
+	
 
 }

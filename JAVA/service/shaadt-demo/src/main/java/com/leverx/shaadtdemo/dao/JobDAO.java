@@ -15,8 +15,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.leverx.shaadtdemo.dao.intfce.IJobDao;
 import com.leverx.shaadtdemo.domain.Job;
@@ -47,7 +45,7 @@ public class JobDAO implements IJobDao {
 				job.setId(rs.getInt("JOB_ID"));
 				job.setDescription(rs.getString("DESCRIPTION"));
 				job.setDepartment(rs.getString("DEPARTMENT"));
-				job.setDepartment(rs.getString("OWNER_NAME"));
+				job.setOwnerName(rs.getString("OWNER_NAME"));
 				entity = Optional.of(job);
 			}
 		} catch (SQLException e) {
@@ -69,7 +67,7 @@ public class JobDAO implements IJobDao {
 				job.setId(rs.getInt("JOB_ID"));
 				job.setDescription(rs.getString("DESCRIPTION"));
 				job.setDepartment(rs.getString("DEPARTMENT"));
-				job.setDepartment(rs.getString("OWNER_NAME"));
+				job.setOwnerName(rs.getString("OWNER_NAME"));
 				jobList.add(job);
 			}
 		} catch (SQLException e) {
@@ -109,7 +107,6 @@ public class JobDAO implements IJobDao {
 	}
 
 	public void update(Job entity) {
-		// TODO Auto-generated method stub
 		try {
 			Connection conn = dataSource.getConnection();
 			PreparedStatement stmnt = conn.prepareStatement(
@@ -124,8 +121,8 @@ public class JobDAO implements IJobDao {
 		}
 	}
 	
-	@RequestMapping(value = "/schema", method = RequestMethod.GET)
-	public String getCurrentSchema(Model model) throws SQLException {
+	
+	public void getCurrentSchema(Model model) throws SQLException {
 		Connection conn = dataSource.getConnection();
 		String currentSchema = "";
 		PreparedStatement prepareStatement = conn
@@ -135,8 +132,8 @@ public class JobDAO implements IJobDao {
 		while (resultSet.next()) {
 			currentSchema += resultSet.getString(column);
 		}
-		model.addAttribute("schema", currentSchema);
-		return "index";
+		logger.info(currentSchema);
+		
 	}
 
 }

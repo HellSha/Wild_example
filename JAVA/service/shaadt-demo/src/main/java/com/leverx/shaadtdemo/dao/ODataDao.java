@@ -23,7 +23,7 @@ public class ODataDao {
 	public List<OData> getAll(String destinationName) {
 		List<OData> UserList = new ArrayList<OData>();
 		try {
-			ODataQueryResult result = ODataQueryBuilder.withEntity(SERVICE_PATH, SERVICE_ENTITY).select("id", "title").build().execute(destinationName);
+			ODataQueryResult result = ODataQueryBuilder.withEntity(SERVICE_PATH, SERVICE_ENTITY).select("ID", "Name").build().execute(destinationName);
 			List<Map<String, Object>> listMap = result.asListOfMaps();
 			return  getODataList(listMap);
 		} catch (ODataException e) {
@@ -36,8 +36,8 @@ public class ODataDao {
 		List<OData> suppliersList = new ArrayList<>();
 		listMap.forEach(item -> {
 			OData supplier = new OData();
-			supplier.setId(item.get("id").toString());
-			supplier.setName(item.get("title").toString());
+			supplier.setId(item.get("ID").toString());
+			supplier.setName(item.get("Name").toString());
 			suppliersList.add(supplier);
 		});
 		return suppliersList;

@@ -16,6 +16,7 @@ public class JobService {
 	@Autowired
 	private JobDAO jobDao;
 
+
 	public List<Job> getJobAll() {
 		return jobDao.getAll();
 	}
@@ -40,4 +41,5 @@ public class JobService {
 	public void deleteJob(Long id) {
 		this.jobDao.delete(id);
 	}
+	
 }
