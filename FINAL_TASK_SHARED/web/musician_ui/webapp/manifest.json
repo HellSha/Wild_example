@@ -20,6 +20,13 @@
                 "settings": {
                     "odataVersion": "2.0"
                 }
+            },
+            "additionalService" : {
+                "uri": "https://p2001064106trial-trial-dev-service.cfapps.eu10.hana.ondemand.com/xsodata/song.xsodata",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "2.0"
+                }
             }
         }
     },
@@ -80,9 +87,62 @@
                     "disableHeadRequestForToken": true
                 }
             },
+            "songs" : {
+                "dataSource": "additionalService",
+                "settings": {
+                    "defaultBindingMode": "TwoWay",
+                    "defaultCountMode": "Inline",
+                    "useBatch": false,
+                    "disableHeadRequestForToken": true
+                }
+            },
             "musician_config": {
                 "type": "sap.ui.model.json.JSONModel",
                 "uri": "./model/musician_config.json"
+            }
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "async": true,
+                "viewPath": "musician_ui.view",
+                "controlAggregation": "pages",
+                "controlId": "app",
+                "clearControlAggregation": false
+            },
+            "routes": [{
+                "name": "home",
+                "pattern": "",
+                "target": ["home"]
+            }, {
+                "name": "song",
+                "pattern": "songs/{invoicePath}",
+                "titleTarget": "",
+                "greedy": false,
+                "target": ["SongDetail"]
+            }],
+            "targets": {
+                "TargetApp": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewName": "App"
+                },
+                "SongDetail": {
+                    "viewType": "XML",
+                    "viewName": "Songs",
+                    "clearControlAggregation": true,
+                    "transition": "show",
+                    "viewLevel": 2
+                },
+                "home": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": true,
+                    "viewName": "App",
+                    "viewLevel": 1
+                }
             }
         }
     },
@@ -90,49 +150,5 @@
         "css": [{
             "uri": "css/style.css"
         }]
-    },
-    "routing": {
-        "config": {
-            "routerClass": "sap.m.routing.Router",
-            "viewType": "XML",
-            "async": true,
-            "viewPath": "musician_ui.view",
-            "controlAggregation": "pages",
-            "controlId": "app",
-            "clearControlAggregation": false
-        },
-        "routes": [{
-            "name": "home",
-            "pattern": "",
-            "target": ["home"]
-        }, {
-            "name": "song",
-            "pattern": "songs/{invoicePath}",
-            "titleTarget": "",
-            "greedy": false,
-            "target": ["SongDetail"]
-        }],
-        "targets": {
-            "TargetApp": {
-                "viewType": "XML",
-                "transition": "slide",
-                "clearControlAggregation": false,
-                "viewName": "App"
-            },
-            "SongDetail": {
-                "viewType": "XML",
-                "viewName": "Songs",
-                "clearControlAggregation": true,
-                "transition": "show",
-                "viewLevel": 2
-            },
-            "home": {
-                "viewType": "XML",
-                "transition": "slide",
-                "clearControlAggregation": true,
-                "viewName": "App",
-                "viewLevel": 1
-            }
-        }
     }
 }

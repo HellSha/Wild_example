@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="HiMTA::myviewSong" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="HOURLY" enforceSqlExecution="false">
+<descriptions defaultDescription="myviewSong"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="HiMTA::Info.song">
+    <resourceUri>HiMTA::Info.song</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="HiMTA::Info.song">
+  <attributes>
+    <attribute id="sid" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="sid"/>
+      <keyMapping columnObjectName="Info.song" columnName="sid"/>
+    </attribute>
+    <attribute id="mid" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="mid"/>
+      <keyMapping columnObjectName="Info.song" columnName="mid"/>
+    </attribute>
+    <attribute id="name" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="name"/>
+      <keyMapping columnObjectName="Info.song" columnName="name"/>
+    </attribute>
+    <attribute id="album" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="album"/>
+      <keyMapping columnObjectName="Info.song" columnName="album"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="221.11302679000914" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

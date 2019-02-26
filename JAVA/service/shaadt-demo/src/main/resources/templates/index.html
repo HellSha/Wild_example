@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Spring Boot</title>
+</head>
+<body>
+<h2 th:text="'Hello, ' + ${appName} + '.Glad to see you!'">Application</h2>
+<h2 th:text="'Current schema DB:  ' + ${schema} + ' .'">Application</h2>
+<h2 th:text="'TOKEN:  ' + ${token} + ' .'">Application</h2>
+<h2 th:text="'VCAP_SERVICES:  ' + ${VCAP_SERVICES} + ' .'">Application</h2>
+<h2 th:text="'HANA TRIAL SCHEMA:  ' + ${SCHEMA} + ' .'">Application</h2>
+</body>
+</html>

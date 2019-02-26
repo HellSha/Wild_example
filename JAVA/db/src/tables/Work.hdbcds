@@ -1,0 +1,22 @@
+namespace HiMTA;
+
+context Work {
+
+    entity Job {
+        key JOB_ID      : Integer64 generated always as identity ( start with 1 increment by 1 );
+            DESCRIPTION : String(50);
+            DEPARTMENT  : String(20);
+            OWNER_NAME  : String(50);
+			
+			toEnrollment : association[*] to Work.Enrollment on toEnrollment.JOB_ID = JOB_ID;
+    };
+
+    entity Enrollment {
+        key JOB_ID     : Integer64;
+        key PERSON_ID  : Integer64 generated always as identity ( start with 1 increment by 1 );
+            FIRST_NAME : String(20);
+            LAST_NAME  : String(20);
+            EMAIL      : String(40);
+            LOCATION   : String(20);
+    };
+};

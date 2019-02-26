@@ -61,7 +61,7 @@ sap.ui.define([
     return Controller.extend("musician_ui.controller.App", {
         onInit: function () {
             setViewModel(this.getView());
-            /*.getProperty("name_property").getData()*/
+                                                /*.getProperty("name_property").getData()*/
             this.musician_config = this.getView().getModel("musician_config");
         },
         handleCreatePress: function () {
@@ -97,33 +97,31 @@ sap.ui.define([
                 });
             }
         },
-        handleToSongPress: function (evt) {
-            var oItem = evt.getSource();
+        handleToSongPress: function () {
+            var oTable = this.getView().byId("details");
+            var selItem = oTable.getSelectedItem();
+            selItem.getBindingContext("musicians").getModel().refresh(true);
+
             var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 
-            oRouter.navTo("create", {
-                invoicePath: encodeURIComponent(oItem.getBindingContext("musicians").getPath().substr(1))
+            oRouter.navTo("song", {
+                invoicePath: encodeURIComponent(selItem.getBindingContext("musicians").getPath().substr(1))
             });
         },
         onSelectionChange: function () {
             var oTable = this.getView().byId("details");
+/*            
             var selItem = oTable.getSelectedItem();
             var index = oTable.indexOfItem(selItem);
-
-            var obj = oTable.getSelectedItem().getBindingContext("musicians").getObject();
-            console.log(obj);
             selItem.getBindingContext("musicians").getModel().refresh(true);
+*/
+            var obj = oTable.getSelectedItem().getBindingContext("musicians").getObject();
 
             this.byId("mid").setValue(obj.mid);
             this.byId("name").setValue(obj.name);
             this.byId("age").setValue(obj.age);
             this.byId("descr").setValue(obj.description);
-
-            if (index == -1) {
-                MessageToast.show("Choose a row!");
-            } else {
-                getViewModel().byId("toSongs").setVisible(true);
-            }
+            
         },
         onClearFormPress: function () {
             this.byId("mid").setValue("");

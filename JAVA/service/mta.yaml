@@ -1,0 +1,40 @@
+﻿ID: HiMTA_service_java
+_schema-version: 2.1
+version: 0.0.1
+
+modules:
+    - 
+        name: javarest
+        type: java
+        path: ./shaadt-demo
+        build-parameters:
+            builder: maven
+            maven-opts:
+              command: [ clean, install ]
+              defines:
+                skipTests: true
+            build-result: target/shaadt-demo-0.0.1-SNAPSHOT.jar
+        parameters:
+            memory: 1024M
+            disk-quota: 512M
+        provides:
+            - {name: javarest, properties: {url: '${default-url}'}}
+        requires:
+            - name: pt_uaa
+            - name: pt_hdi
+            - name: destination
+            - name: connectivity
+   
+resources:
+    -
+        name: pt_hdi
+        type: org.cloudfoundry.existing-service
+    -
+        name: destination
+        type: org.cloudfoundry.existing-service
+    -
+        name: pt_uaa
+        type: org.cloudfoundry.existing-service
+    -
+        name: connectivity
+        type: org.cloudfoundry.existing-service

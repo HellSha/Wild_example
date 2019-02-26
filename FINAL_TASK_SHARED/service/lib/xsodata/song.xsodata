@@ -1,0 +1,3 @@
+service {
+  "HiMTA::myviewSong" as "song" keys generate local "id";
+}

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="HiMTA::myviewMus" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="HOURLY" enforceSqlExecution="false">
+<descriptions defaultDescription="myviewMus"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="HiMTA::Info.musician">
+    <resourceUri>HiMTA::Info.musician</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="HiMTA::Info.musician">
+  <attributes>
+    <attribute id="mid" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="mid"/>
+      <keyMapping columnObjectName="Info.musician" columnName="mid"/>
+    </attribute>
+    <attribute id="name" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="name"/>
+      <keyMapping columnObjectName="Info.musician" columnName="name"/>
+    </attribute>
+    <attribute id="age" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="age"/>
+      <keyMapping columnObjectName="Info.musician" columnName="age"/>
+    </attribute>
+    <attribute id="description" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="description"/>
+      <keyMapping columnObjectName="Info.musician" columnName="description"/>
+    </attribute>
+    <attribute id="create_time" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="create_time"/>
+      <keyMapping columnObjectName="Info.musician" columnName="create_time"/>
+    </attribute>
+    <attribute id="update_time" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="update_time"/>
+      <keyMapping columnObjectName="Info.musician" columnName="update_time"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="221.11302679000914" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
