@@ -3,7 +3,7 @@
         <App>
             <pages>
                 <Page title="{i18n>songTitle}" showNavButton="true" navButtonPress="handleNavButtonPress">
-                    <Table id="details" mode="SingleSelectMaster" items="{path: 'songs>/song'}" selectionChange=".onSelectionChange">
+                   <Table id="details" mode="SingleSelectMaster" items="{path: 'songs>/song'}" selectionChange=".onSelectionChange">
                                 <columns class="tableColumns">
                                     <Column id="songIdColumn">
                                         <Text text="{i18n>songId}" />
@@ -14,9 +14,6 @@
                                     <Column id="songAlbumColumn">
                                         <Text text="{i18n>songAlbum}" />
                                     </Column>         
-                                    <Column id="userEditColumn">
-                                        <Text text="{i18n>title_edit}" />
-                                    </Column>
                                 </columns>
                                 <items>
                                     <ColumnListItem type="Active">
@@ -28,9 +25,6 @@
                                         </cells>
                                         <cells>
                                             <Input id="labelDescr" value="{songs>album}" editable="false"/>
-                                        </cells>
-                                        <cells>
-                                            <Button id="editButton" icon="sap-icon://edit" text="{i18n>button_edit}" enabled="{song_config>enabled}" type="Default" press="handleEditPress"></Button>
                                         </cells>
                                     </ColumnListItem>
                                 </items>

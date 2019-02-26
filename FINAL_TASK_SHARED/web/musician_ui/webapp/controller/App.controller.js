@@ -33,7 +33,6 @@ sap.ui.define([
             merge: false,
             success: function () {
                 MessageToast.show(getProperty("create_success_info"));
-                console.log(oMusician);
             },
             error: function (data) {
                 var message = JSON.stringify(data);
@@ -101,8 +100,8 @@ sap.ui.define([
             var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 
             oRouter.navTo("song", {
-                invoicePath: encodeURIComponent(selItem.getBindingContext("musicians").getPath().substr(1))
-            });
+                invoicePath: encodeURIComponent(selItem.getBindingContext("musicians").getProperty("mid"))
+            });            
         },
         onSelectionChange: function () {
             var oTable = this.getView().byId("details");
