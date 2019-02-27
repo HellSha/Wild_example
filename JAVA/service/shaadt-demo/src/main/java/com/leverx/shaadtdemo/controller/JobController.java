@@ -46,5 +46,11 @@ public class JobController {
 		jobService.updateJob(job);
 	}
 	
+	@GetMapping(value = "/innerjoin")
+	public void getInnerJoinUser() {
+		jobService.getInnerJoinUser();
+	}
+
+	
 
 }

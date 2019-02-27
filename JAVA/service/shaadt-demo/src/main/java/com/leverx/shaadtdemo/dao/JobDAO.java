@@ -22,8 +22,10 @@ import com.leverx.shaadtdemo.domain.Job;
 @Repository
 public class JobDAO implements IJobDao {
 	final String TABLE_NAME = "\"HiMTA::Work.Job\"";
+	final String TABLE_NAME_ENROLLMENT = "\"HiMTA::Work.Enrollment\"";
 	final String JOB_ID_FIELD = "\"JOB_ID\"";
 	final String UPDATE_OWNER_NAME = "\"OWNER_NAME\"";
+	final String ENROLLMENT_ID_FIELD = "\"PERSON_ID\"";
 
 	private static final Logger logger = LoggerFactory.getLogger(JobDAO.class);
 
@@ -122,18 +124,42 @@ public class JobDAO implements IJobDao {
 	}
 	
 	
-	public void getCurrentSchema(Model model) throws SQLException {
-		Connection conn = dataSource.getConnection();
-		String currentSchema = "";
-		PreparedStatement prepareStatement = conn
-				.prepareStatement("SELECT CURRENT_SCHEMA \"current_schema\" FROM DUMMY;");
-		ResultSet resultSet = prepareStatement.executeQuery();
-		int column = resultSet.findColumn("current_schema");
-		while (resultSet.next()) {
-			currentSchema += resultSet.getString(column);
+	public void getCurrentSchema(Model model){
+		Connection conn;
+		try {
+			conn = dataSource.getConnection();
+			String currentSchema = "";
+			PreparedStatement prepareStatement = conn
+					.prepareStatement("SELECT CURRENT_SCHEMA \"current_schema\" FROM DUMMY;");
+			ResultSet resultSet = prepareStatement.executeQuery();
+			int column = resultSet.findColumn("current_schema");
+			while (resultSet.next()) {
+				currentSchema += resultSet.getString(column);
+			}
+			logger.info(currentSchema);	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		logger.info(currentSchema);
-		
+	}
+	
+	public List<String> getInnerJoinUser() {
+		List<String> arr = new ArrayList<String>();
+		try {
+			Connection conn = dataSource.getConnection();
+			PreparedStatement prepareStatement = conn
+					.prepareStatement("SELECT " +  JOB_ID_FIELD + "," + ENROLLMENT_ID_FIELD + " FROM " + TABLE_NAME + " INNER JOIN " + TABLE_NAME_ENROLLMENT + " ON \"HiMTA::Work.Job\".\"JOB_ID\"=\"HiMTA::Work.Enrollment\".\"JOB_ID\"");
+			ResultSet resultSet = prepareStatement.executeQuery();
+			
+			while (resultSet.next()) {
+				arr.add(resultSet.getString("PERSON_ID"));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return arr;
 	}
 
 }

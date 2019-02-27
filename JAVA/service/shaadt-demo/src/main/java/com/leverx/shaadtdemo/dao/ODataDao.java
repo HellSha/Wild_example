@@ -17,7 +17,7 @@ import com.sap.cloud.sdk.odatav2.connectivity.ODataQueryResult;
 @Repository
 public class ODataDao {
 	private static final Logger logger = LoggerFactory.getLogger(ODataDao.class);
-	private final String SERVICE_PATH = "/V2/OData/OData.svc/";
+	private final String SERVICE_PATH = "V2/OData/OData.svc";
 	private final String SERVICE_ENTITY = "Products";
 	
 	public List<OData> getAll(String destinationName) {

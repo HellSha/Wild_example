@@ -42,4 +42,8 @@ public class JobService {
 		this.jobDao.delete(id);
 	}
 	
+	public void getInnerJoinUser() {
+		this.jobDao.getInnerJoinUser();
+	}
+	
 }

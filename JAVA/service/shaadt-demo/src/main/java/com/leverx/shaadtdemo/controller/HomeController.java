@@ -21,6 +21,7 @@ import com.sap.cloud.sdk.s4hana.connectivity.exception.AccessDeniedException;
 
 @Controller
 public class HomeController {
+	
 	private static final String HANATRIAL = "hanatrial";
 	private static final String CREDENTIALS = "credentials";
 	private static final String SCHEMA = "schema";
@@ -32,7 +33,8 @@ public class HomeController {
 	@Autowired  
 	private CloudService cloudService;  
 	@Autowired  
-	private SecurityService securityService; 
+	private SecurityService securityService;
+	
 	@RequestMapping(value="/", method=RequestMethod.GET)  
 	public String getHome(Model model) {   
 		Map<String, JsonElement> vcap = cloudService.getSpaceName();
