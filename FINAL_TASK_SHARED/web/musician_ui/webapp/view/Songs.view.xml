@@ -3,7 +3,7 @@
         <App>
             <pages>
                 <Page title="{i18n>songTitle}" showNavButton="true" navButtonPress="handleNavButtonPress">
-                   <Table id="details" mode="SingleSelectMaster" items="{path: 'songs>/song'}" selectionChange=".onSelectionChange">
+                   <Table id="details" mode="SingleSelectMaster" items="{path: 'musicians>toSongs'}" selectionChange=".onSelectionChange">
                                 <columns class="tableColumns">
                                     <Column id="songIdColumn">
                                         <Text text="{i18n>songId}" />
@@ -18,13 +18,13 @@
                                 <items>
                                     <ColumnListItem type="Active">
                                         <cells>
-                                            <Input id="labelName" value="{songs>sid}" editable="false"/>
+                                            <Input id="labelName" value="{musicians>sid}" editable="false"/>
                                         </cells>
                                         <cells>
-                                            <Input id="labelAge" value="{songs>name}" editable="false"/>
+                                            <Input id="labelAge" value="{musicians>name}" editable="false"/>
                                         </cells>
                                         <cells>
-                                            <Input id="labelDescr" value="{songs>album}" editable="false"/>
+                                            <Input id="labelDescr" value="{musicians>album}" editable="false"/>
                                         </cells>
                                     </ColumnListItem>
                                 </items>
