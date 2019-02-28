@@ -26,39 +26,38 @@ import com.sap.cloud.sdk.cloudplatform.security.AuthTokenFacade;
 public class CloudService {
 
 	@Autowired
-	private CloudPlatform platform;
+	private CloudPlatform cloudPlatform;
 	@Autowired
-	private ScpCfCloudPlatform spacename;
+	private ScpCfCloudPlatform scpCloudPlatform;
 	@Autowired
-	private ScpCfCloudPlatform getSchema;
-	@Autowired 
-	private AuthTokenFacade authtoken;
+	private AuthTokenFacade authToken;
 
 	public String getApplicationName() {
-		return platform.getApplicationName();
+		return cloudPlatform.getApplicationName();
 	}
 
 	public Map<String, JsonElement> getSpaceName() {
-		return spacename.getVcapApplication();
+		return scpCloudPlatform.getVcapApplication();
 	}
 
 	public Map<String, JsonArray> getSchemaName() {
-		return getSchema.getVcapServices();
+		return scpCloudPlatform.getVcapServices();
 	}
-	
+
 	public Optional<AuthToken> getCurrToken() {
-		return authtoken.getCurrentToken();
+		return authToken.getCurrentToken();
 	}
+
 	public JsonObject getInfo(Optional<AuthToken> token) {
 		String[] split_string = token.get().getJwt().getToken().split("\\.");
 		String base64EncodedBody = split_string[1];
 		Base64 base64Url = new Base64(true);
 		String body = new String(base64Url.decode(base64EncodedBody));
 		JsonParser jsonParser = new JsonParser();
-		JsonObject jo = (JsonObject)jsonParser.parse(body);
+		JsonObject jo = (JsonObject) jsonParser.parse(body);
 		return jo;
 	}
-	
+
 	public List<Destination> getDestinations() {
 		List<Destination> destinationList = new ArrayList<Destination>();
 		Map<String, GenericDestination> destinationMap = DestinationAccessor.getGenericDestinationsByName();

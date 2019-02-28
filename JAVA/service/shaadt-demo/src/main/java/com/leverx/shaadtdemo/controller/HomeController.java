@@ -21,36 +21,45 @@ import com.sap.cloud.sdk.s4hana.connectivity.exception.AccessDeniedException;
 
 @Controller
 public class HomeController {
-	
+
 	private static final String HANATRIAL = "hanatrial";
 	private static final String CREDENTIALS = "credentials";
 	private static final String SCHEMA = "schema";
+	private static final String SPACE_NAME = "space_name";
 	private static final String FINAL_NAME = "given_name";
 	private static final String FAMILY_NAME = "family_name";
-	private static final String SPACE_NAME = "space_name";
-	
-	
-	@Autowired  
-	private CloudService cloudService;  
-	@Autowired  
+
+	@Autowired
+	private CloudService cloudService;
+	@Autowired
 	private SecurityService securityService;
-	
-	@RequestMapping(value="/", method=RequestMethod.GET)  
-	public String getHome(Model model) {   
-		Map<String, JsonElement> vcap = cloudService.getSpaceName();
-		String appName = cloudService.getApplicationName();
-		JsonElement vc = vcap.get(SPACE_NAME);
+
+	@RequestMapping(value = "/schema", method = RequestMethod.GET)
+	public String getHome(Model model) {
 		JsonArray hanatrial = cloudService.getSchemaName().get(HANATRIAL);
 		JsonElement schema = hanatrial.get(0).getAsJsonObject().get(CREDENTIALS).getAsJsonObject().get(SCHEMA);
-		model.addAttribute("VCAP",vc.toString());
-		model.addAttribute("appName", appName);  
+
 		model.addAttribute("schema", schema);
+		return "index";
+	}
+
+	public String getSpaceName(Model model) {
+		Map<String, JsonElement> vcap = cloudService.getSpaceName();
+		JsonElement vc = vcap.get(SPACE_NAME);
+
+		model.addAttribute("VCAP", vc.toString());
+		return "space";
+	}
+
+	@RequestMapping(value = "/destinations", method = RequestMethod.GET)
+	public String getListOfDestinations(Model model) {
 		List<Destination> destinations = cloudService.getDestinations();
 		model.addAttribute("destinations", destinations);
-		return "index"; 
-	} 
-	@RequestMapping(value="/jwt", method=RequestMethod.GET)  
-	public String getJWT(Model model) {   
+		return "destination";
+	}
+
+	@RequestMapping(value = "/jwt", method = RequestMethod.GET)
+	public String getJWT(Model model) {
 		Optional<AuthToken> token = cloudService.getCurrToken();
 		JsonObject jo = cloudService.getInfo(token);
 		JsonElement name = jo.get(FINAL_NAME);
@@ -58,9 +67,10 @@ public class HomeController {
 		model.addAttribute("token", jo);
 		model.addAttribute("name", name);
 		model.addAttribute("familyname", familyname);
-		return "jwt"; 
-	} 
-	@RequestMapping(value="/scope", method=RequestMethod.GET)
+		return "jwt";
+	}
+
+	@RequestMapping(value = "/scope", method = RequestMethod.GET)
 	public String checkScope() throws AccessDeniedException {
 		securityService.userHasAuthorization("Display");
 		return "scope";

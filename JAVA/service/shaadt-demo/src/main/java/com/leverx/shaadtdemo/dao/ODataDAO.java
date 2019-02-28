@@ -13,27 +13,27 @@ import com.sap.cloud.sdk.odatav2.connectivity.ODataException;
 import com.sap.cloud.sdk.odatav2.connectivity.ODataQueryBuilder;
 import com.sap.cloud.sdk.odatav2.connectivity.ODataQueryResult;
 
-
 @Repository
-public class ODataDao {
-	private static final Logger logger = LoggerFactory.getLogger(ODataDao.class);
+public class ODataDAO {
+	private static final Logger logger = LoggerFactory.getLogger(ODataDAO.class);
 	private final String SERVICE_PATH = "V2/OData/OData.svc";
 	private final String SERVICE_ENTITY = "Products";
-	
+
 	public List<OData> getAll(String destinationName) {
 		List<OData> UserList = new ArrayList<OData>();
 		try {
-			ODataQueryResult result = ODataQueryBuilder.withEntity(SERVICE_PATH , SERVICE_ENTITY).select("ID", "Name").build().execute(destinationName);
+			ODataQueryResult result = ODataQueryBuilder.withEntity(SERVICE_PATH, SERVICE_ENTITY).select("ID", "Name")
+					.build().execute(destinationName);
 			List<Map<String, Object>> listMap = result.asListOfMaps();
-			logger.error("ODATA: " + getODataList(listMap));
-			return  getODataList(listMap);
+			logger.error("ODATA List of Entities: " + getODataList(listMap));
+			return getODataList(listMap);
 		} catch (ODataException e) {
-			logger.error("Error while trying to get list of entities: " + e.getMessage());
+			logger.error("Error while trying to get List of Entities: " + e.getMessage());
 		}
 		return UserList;
 	}
-	
-	private List<OData> getODataList(List<Map<String, Object>> listMap){
+
+	private List<OData> getODataList(List<Map<String, Object>> listMap) {
 		List<OData> suppliersList = new ArrayList<>();
 		listMap.forEach(item -> {
 			OData supplier = new OData();

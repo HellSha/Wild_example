@@ -10,15 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.leverx.shaadtdemo.domain.OData;
 import com.leverx.shaadtdemo.service.ODataService;
 
-
 @RestController
 public class ODataController {
 
 	@Autowired
-	private ODataService  oDataService;
-	
-	@GetMapping(value="/odata/{destinationName}")
+	private ODataService oDataService;
+
+	@GetMapping(value = "/odata/{destinationName}")
 	public List<OData> getAllSuppliers(@PathVariable String destinationName) {
-	  return 	oDataService.getAllSuppliers(destinationName);
+		return oDataService.getAllSuppliers(destinationName);
 	}
 }

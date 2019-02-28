@@ -16,12 +16,7 @@ public class CloudConfig {
 	}
 
 	@Bean
-	public ScpCfCloudPlatform spacename() {
-		return ScpCfCloudPlatform.getInstanceOrThrow();
-	}
-
-	@Bean
-	public ScpCfCloudPlatform getSchema() {
+	public ScpCfCloudPlatform cloud() {
 		return ScpCfCloudPlatform.getInstanceOrThrow();
 	}
 

@@ -94,7 +94,6 @@ public class JobDAO implements IJobDao {
 	}
 
 	public void delete(Long id) {
-		// TODO Auto-generated method stub
 		try {
 			Connection conn = dataSource.getConnection();
 			PreparedStatement stmnt = conn
@@ -122,9 +121,8 @@ public class JobDAO implements IJobDao {
 			logger.error("Failed to update: " + e.getMessage());
 		}
 	}
-	
-	
-	public void getCurrentSchema(Model model){
+
+	public void getCurrentSchema(Model model) {
 		Connection conn;
 		try {
 			conn = dataSource.getConnection();
@@ -136,30 +134,27 @@ public class JobDAO implements IJobDao {
 			while (resultSet.next()) {
 				currentSchema += resultSet.getString(column);
 			}
-			logger.info(currentSchema);	
+			logger.info(currentSchema);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
 	public List<String> getInnerJoinUser() {
 		List<String> arr = new ArrayList<String>();
 		try {
 			Connection conn = dataSource.getConnection();
-			PreparedStatement prepareStatement = conn
-					.prepareStatement("SELECT " +  JOB_ID_FIELD + "," + ENROLLMENT_ID_FIELD + " FROM " + TABLE_NAME + " INNER JOIN " + TABLE_NAME_ENROLLMENT + " ON \"HiMTA::Work.Job\".\"JOB_ID\"=\"HiMTA::Work.Enrollment\".\"JOB_ID\"");
+			PreparedStatement prepareStatement = conn.prepareStatement("SELECT " + JOB_ID_FIELD + ","
+					+ ENROLLMENT_ID_FIELD + " FROM " + TABLE_NAME + " INNER JOIN " + TABLE_NAME_ENROLLMENT + " ON "
+					+ TABLE_NAME + "." + JOB_ID_FIELD + "=" + TABLE_NAME_ENROLLMENT + "." + JOB_ID_FIELD + ";");
 			ResultSet resultSet = prepareStatement.executeQuery();
-			
+
 			while (resultSet.next()) {
 				arr.add(resultSet.getString("PERSON_ID"));
 			}
-			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return arr;
 	}
-
 }
