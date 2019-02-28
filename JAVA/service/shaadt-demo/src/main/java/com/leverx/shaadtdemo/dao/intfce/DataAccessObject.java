@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-
 public interface DataAccessObject<T, K> {
 	public Optional<T> getById(K id);
 

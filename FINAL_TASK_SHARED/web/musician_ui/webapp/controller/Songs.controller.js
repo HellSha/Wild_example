@@ -11,10 +11,20 @@ sap.ui.define([
             oRouter.getRoute("song").attachMatched(this._onRouteMatched, this);
         },
         _onRouteMatched: function (oEvent) {
+
+            this.getView().bindElement({
+				path: decodeURIComponent("/" + oEvent.getParameter("arguments").invoicePath),
+				model: "musicians",
+				parameters: {
+					expand: "toSongs"
+				},
+			});
+/*
             this.getView().bindElement({
                 path: decodeURIComponent("/" + oEvent.getParameter("arguments").invoicePath),
                 model: "musicians"
             });
+            */
         },
         handleNavButtonPress: function () {
             var oRouter = sap.ui.core.UIComponent.getRouterFor(this);

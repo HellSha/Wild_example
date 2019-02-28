@@ -100,7 +100,10 @@ sap.ui.define([
             var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 
             oRouter.navTo("song", {
-                invoicePath: encodeURIComponent(selItem.getBindingContext("musicians").getProperty("mid"))
+
+               // getPath().substr(1)
+               //getProperty("mid")
+                invoicePath: encodeURIComponent(selItem.getBindingContext("musicians").getPath().substr(1))
             });            
         },
         onSelectionChange: function () {

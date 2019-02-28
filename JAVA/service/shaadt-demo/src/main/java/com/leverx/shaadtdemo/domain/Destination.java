@@ -3,12 +3,12 @@ package com.leverx.shaadtdemo.domain;
 import java.util.List;
 
 public class Destination {
-private String name;
-	
+	private String name;
+
 	private String description;
-	
+
 	private String destinationType;
-	
+
 	private List<Property> propertyList;
 
 	public String getName() {

@@ -2,7 +2,7 @@ package com.leverx.shaadtdemo.domain;
 
 public class Property {
 	private String name;
-	
+
 	private String value;
 
 	public String getName() {
