@@ -43,6 +43,7 @@ public class HomeController {
 		return "index";
 	}
 
+	@RequestMapping(value = "/space", method = RequestMethod.GET)
 	public String getSpaceName(Model model) {
 		Map<String, JsonElement> vcap = cloudService.getSpaceName();
 		JsonElement vc = vcap.get(SPACE_NAME);

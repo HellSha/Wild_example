@@ -11,12 +11,12 @@ import com.sap.cloud.sdk.cloudplatform.security.AuthTokenFacade;
 @Configuration
 public class CloudConfig {
 	@Bean
-	public CloudPlatform platform() {
+	public CloudPlatform cloudPlatform() {
 		return CloudPlatformAccessor.getCloudPlatform();
 	}
 
 	@Bean
-	public ScpCfCloudPlatform cloud() {
+	public ScpCfCloudPlatform scpCloudPlatform() {
 		return ScpCfCloudPlatform.getInstanceOrThrow();
 	}
 
